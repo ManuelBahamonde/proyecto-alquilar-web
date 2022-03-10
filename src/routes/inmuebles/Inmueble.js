@@ -4,21 +4,17 @@ import ImageGallery from 'react-image-gallery';
 import { useParams } from "react-router";
 import API from "../../api/API";
 import LoadingSpinner from "../../components/LoadingSpinner";
-import SampleInmuebleInfo from '../../temp/SampleInmuebleInfo.json';
+import months from "../../temp/Months";
 
 const Inmueble = () => {
     const { idInmueble } = useParams();
     const [inmuebleInfo, setInmuebleInfo] = useState(null);
 
     useEffect(() => {
-        setTimeout(() => setInmuebleInfo(SampleInmuebleInfo), 1000);
-        /*
-        TODO: uncomment when Inmueble is created on the database
         API.get(`/inmueble/${idInmueble}`)
             .then((response) => {
                 setInmuebleInfo(response.data);
             });
-        */
     }, [idInmueble]);
 
     const getFormattedImages = (images) => {
@@ -31,11 +27,13 @@ const Inmueble = () => {
 
     const renderEstado = (fechaHastaAlquilada) => {
         if (fechaHastaAlquilada) {
+            const date = new Date(fechaHastaAlquilada);
+            const formattedDate = `${date.getDate()} de ${months[date.getMonth()]} del ${date.getFullYear()}`;
             return (
                 <>
                     <Badge bg="danger">ALQUILADO</Badge>
                     <br />
-                    hasta {fechaHastaAlquilada}
+                    hasta el {formattedDate}
                 </>
             );
         }
