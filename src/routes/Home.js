@@ -6,7 +6,7 @@ const Home = () => {
         <div className="home">
             <Row>
                 <Col>
-                    <h1>Trabajo Practico Tecnologías y Técnicas Avanzadas en el Desarrollo de Software</h1>
+                    <h1>Trabajo Practico Técnicas y Tecnologías Avanzadas en el Desarrollo de Software</h1>
                 </Col>
             </Row>
             <p className="integrantes">Gianfranco Scaldini, Ramiro Sammataro y Manuel Bahamonde</p>
