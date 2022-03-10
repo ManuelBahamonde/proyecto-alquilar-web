@@ -1,0 +1,20 @@
+{
+    "idInmueble": 1,
+    "direccion": "ABC 123",
+    "piso": 3,
+    "departamento": null,
+    "precio": 150.15,
+    "habitaciones": 3,
+    "baños": null,
+    "ambientes": null,
+    "fechaHastaAlquilada": "12/12/2022",
+    "imagenes": [
+        { "url": "http://imagenes.catholic.net/imagenes_db/6e9413_edificio.jpg" },
+        { "url": "http://imagenes.catholic.net/imagenes_db/6e9413_edificio.jpg" },
+        { "url": "http://imagenes.catholic.net/imagenes_db/6e9413_edificio.jpg" }
+    ],
+    "nombreVendedor": "Manuel Bahamonde",
+    "emailVendedor": "manuelbahamonde6@gmail.com",
+    "telefonoVendedor": "3416851065",
+    "nombreTipoInmueble": "Oficina"
+}

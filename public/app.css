@@ -1,0 +1,55 @@
+.inmuebles-container {
+    margin-top: 1rem;
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.loading-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.inmueble-card {
+    width: 200px;
+    cursor: pointer;
+    place-self: center;
+    margin-bottom: 3rem;
+}
+.inmueble-card .card-title {
+    text-align: center;
+}
+.inmueble-card .card-footer {
+    text-align: center;
+    background-color: #0d6efd;
+    font-weight: bold;
+    color: white;
+}
+
+.inmueble-summary {
+    text-align: center;
+}
+.inmueble-summary .title {
+    font-size: xx-large;
+    font-weight: bold;
+}
+.inmueble-summary .card-footer.precio {
+    background-color: #0d6efd;
+    font-weight: bold;
+    color: white;
+}
+
+.home {
+    text-align: center;
+}
+.home .integrantes {
+    font-size: large;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+}
