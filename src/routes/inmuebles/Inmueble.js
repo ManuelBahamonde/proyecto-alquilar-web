@@ -3,7 +3,7 @@ import { Badge, Card, Col, Row } from "react-bootstrap";
 import ImageGallery from 'react-image-gallery';
 import { useParams } from "react-router";
 import API from "../../api/API";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import LoadingSpinner from "../../components/UI/LoadingSpinner";
 import months from "../../temp/Months";
 
 const Inmueble = () => {
@@ -41,7 +41,7 @@ const Inmueble = () => {
         return <Badge bg="success">LIBRE</Badge>;
     };
 
-    if (inmuebleInfo === null) return <LoadingSpinner className="loading-center" />
+    if (inmuebleInfo === null) return <LoadingSpinner className="centered" />
 
     const {
         direccion,

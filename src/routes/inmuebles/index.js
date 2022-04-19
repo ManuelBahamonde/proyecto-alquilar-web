@@ -3,5 +3,5 @@ import Inmueble from "./Inmueble";
 
 export {
     Inmuebles,
-    Inmueble
+    Inmueble,
 };

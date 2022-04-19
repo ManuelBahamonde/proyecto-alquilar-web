@@ -5,6 +5,7 @@ import App from './App';
 import Home from './routes/Home';
 import { Inmuebles, Inmueble } from './routes/inmuebles';
 import NotFound from './components/NotFound';
+import NuevoInmueble from './routes/inmuebles/nuevoInmueble';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -13,7 +14,8 @@ ReactDOM.render(
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
           <Route path="inmuebles" element={<Inmuebles />} />
-          <Route path="inmuebles/:idInmueble" element={<Inmueble />} />  
+          <Route path="inmuebles/:idInmueble" element={<Inmueble />} />
+          <Route path="nuevoInmueble" element={<NuevoInmueble />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router";
 import API from '../../api/API';
-import LoadingSpinner from "../../components/LoadingSpinner";
-import InmuebleCard from "../../components/InmuebleCard";
+import LoadingSpinner from "../../components/UI/LoadingSpinner";
+import InmuebleCard from "../../components/Inmuebles/InmuebleCard";
 
 const Inmuebles = () => {
     const navigate = useNavigate();
@@ -23,7 +23,7 @@ const Inmuebles = () => {
     if (inmuebles === null) return <LoadingSpinner className="loading-center" />
 
     return (
-        <div class="inmuebles-container">
+        <div className="inmuebles-container">
             {inmuebles.map((inmueble) => {
                 return (
                     <InmuebleCard key={inmueble.idInmueble} inmueble={inmueble} onSelect={() => handleInmuebleSelected(inmueble)} />
