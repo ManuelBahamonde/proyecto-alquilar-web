@@ -1,14 +1,34 @@
 import { Fragment, useRef, useState, useEffect } from "react";
-import { Form, Row, Col, Alert, Spinner } from "react-bootstrap";
+import { Form, Row, Col, Alert } from "react-bootstrap";
 import LoadingSpinner from "../UI/LoadingSpinner";
+import AsyncSelect from "react-select/async";
+import _ from "lodash";
 import classes from "./FormInmueble.module.css";
 
 // Validation Helpers:
 
 const isEmpty = (value) => value.trim() === "";
 
-const FormInmueble = (props) => {
+const isFechaValida = (value) => {
+  var today = new Date();
+  var date = new Date(value);
+
+  return date > today;
+};
+
+const soloNumeros = (value) => {
+  return value.match(/^[0-9]+$/);
+};
+
+const soloPrecio = (value) => {
+  return value.match(/^\d{0,2}(\.\d{0,2}){0,1}$/);
+};
+
+const FormInmueble = (prop) => {
   const [posiblesTiposInmuebles, setPosiblesTiposInmuebles] = useState([]);
+  const [posiblesLocalidades, setPosiblesLocalidades] = useState([]);
+  const [hayFechaHasta, setHayFechaHasta] = useState(false);
+
   const [estamosEditando, setEstamosEditando] = useState(false);
   const [esperandoRespuesta, setEsperandoRespuesta] = useState(false);
   const [httpError, setHttpError] = useState();
@@ -41,13 +61,11 @@ const FormInmueble = (props) => {
   useEffect(() => {
     setTenemosError(false);
     setEsperandoRespuesta(true);
-    const fetchMeals = async () => {
-      const response = await fetch(
-        'https://localhost:44380/TipoInmueble'
-      );
+    const fetchTiposInmuebles = async () => {
+      const response = await fetch("https://localhost:44380/TipoInmueble");
 
       if (!response.ok) {
-        throw new Error('Algo salio mal al cargar los tipos de inmueble!');
+        throw new Error("Algo salio mal al cargar los tipos de inmueble!");
       }
 
       const responseData = await response.json();
@@ -66,14 +84,12 @@ const FormInmueble = (props) => {
       setTenemosError(null);
     };
 
-    fetchMeals().catch((error) => {
+    fetchTiposInmuebles().catch((error) => {
       setEsperandoRespuesta(false);
       setHttpError(error.message);
       setTenemosError(true);
     });
   }, []);
-
-
 
   const direccionInputRef = useRef();
   const pisoInputRef = useRef();
@@ -112,10 +128,7 @@ const FormInmueble = (props) => {
   };
   const tipoInmebleInputChangeHandler = (event) => {
     setTipoInmuebleIngresado(event.target.value);
-    console.log(event.target.value)
-  };
-  const localidadInputChangeHandler = (event) => {
-    setLocalidadIngresada(event.target.value);
+    console.log(event.target.value);
   };
 
   const limpiarForm = () => {
@@ -186,16 +199,27 @@ const FormInmueble = (props) => {
 
     // Validaciones:
     const direccionIngresadaEsValido = !isEmpty(direccionIngresada);
-    const pisoIngresadoEsValido = !isEmpty(pisoIngresado);
-    const departamentoIngresadoEsValido = !isEmpty(departamentoIngresado);
-    const precioIngresadoEsValido = !isEmpty(precioIngresado);
-    const habitacionesIngresadasEsValido = !isEmpty(habitacionesIngresadas);
-    const bañosIngresadosEsValido = !isEmpty(bañosIngresados);
-    const ambientesIngresadosEsValido = !isEmpty(ambientesIngresados);
-    const fechaHastaIngresadaEsValido = !isEmpty(fechaHastaIngresada);
+    const pisoIngresadoEsValido =
+      isEmpty(pisoIngresado) ||
+      (!isEmpty(pisoIngresado) && soloNumeros(pisoIngresado));
+    const departamentoIngresadoEsValido = true;
+    const precioIngresadoEsValido =
+      !isEmpty(precioIngresado) && soloPrecio(precioIngresado);
+    const habitacionesIngresadasEsValido =
+      isEmpty(habitacionesIngresadas) ||
+      (!isEmpty(habitacionesIngresadas) && soloNumeros(habitacionesIngresadas));
+    const bañosIngresadosEsValido =
+      isEmpty(bañosIngresados) ||
+      (!isEmpty(bañosIngresados) && soloNumeros(bañosIngresados));
+    const ambientesIngresadosEsValido =
+      isEmpty(ambientesIngresados) ||
+      (!isEmpty(ambientesIngresados) && soloNumeros(ambientesIngresados));
+    const fechaHastaIngresadaEsValido =
+      isFechaValida(fechaHastaIngresada) || !hayFechaHasta;
     const tipoInmuebleIngresadoEsValido = !isEmpty(tipoInmuebleIngresado);
-    const localidadIngresadaEsValido = !isEmpty(localidadIngresada);
+    const localidadIngresadaEsValido = localidadIngresada !== null;
 
+    // setFormInputsValidity((prevState) => {return {...prevState,direccion:false}})
     setFormInputsValidity({
       direccion: direccionIngresadaEsValido,
       piso: pisoIngresadoEsValido,
@@ -307,13 +331,61 @@ const FormInmueble = (props) => {
       return <></>;
     }
   };
+  // TODO:
+  const loadOptions = _.debounce((input, callback) => {
+    console.log(input);
+
+    setTenemosError(null);
+    const fetchLocalidades = async () => {
+      const response = await fetch("https://localhost:44380/Localidad");
+
+      if (!response.ok) {
+        throw new Error("No hay ninguna localidad cargada con ese nombre");
+      }
+
+      const responseData = await response.json();
+
+      const localidades = [];
+
+      for (const key in responseData) {
+        localidades.push({
+          idLocalidad: responseData[key].idLocalidad,
+          label: responseData[key].label,
+        });
+      }
+
+      callback(localidades);
+      setTenemosError(null);
+      console.log("se hizo una llamada");
+    };
+
+    fetchLocalidades().catch((error) => {
+      setHttpError(error.message);
+      setTenemosError(true);
+    });
+  }, 1000);
+
+  const onInputChangeHandler = (value) => {
+    setLocalidadIngresada(value.idLocalidad);
+    console.log(value.idLocalidad);
+  };
+
+  const checkBoxHandler = () => {
+    setHayFechaHasta((a) => {
+      return !a;
+    });
+
+    if (hayFechaHasta) {
+      setFechaHastaIngresada("");
+    }
+  };
 
   return (
     <Fragment>
       {esperandoRespuesta && (
-        <div className='centered'>
-        <LoadingSpinner />
-      </div>
+        <div className="centered">
+          <LoadingSpinner />
+        </div>
       )}
       {!esperandoRespuesta && (
         <div>
@@ -438,8 +510,23 @@ const FormInmueble = (props) => {
               </Form.Group>
               <Form.Group as={Col}>
                 <div className={fechaHastaControlClasses}>
-                  <label htmlFor="fechaHasta">Fecha hasta alquilada</label>
+                  <Row>
+                    <Col md={12}>
+                      <input
+                        name="hayFechaHasta"
+                        type="checkbox"
+                        checked={hayFechaHasta}
+                        onChange={checkBoxHandler}
+                      />
+                    </Col>
+                    <Col>
+                      <label htmlFor="hayFechaHasta">
+                        Fecha hasta alquilada
+                      </label>
+                    </Col>
+                  </Row>
                   <input
+                    disabled={!hayFechaHasta}
                     ref={fechaHastaInputRef}
                     type="date"
                     id="fechaHasta"
@@ -456,8 +543,20 @@ const FormInmueble = (props) => {
               <Form.Group as={Col}>
                 <div className={tipoInmuebleControlClasses}>
                   <label htmlFor="tipoInmueble">Tipo de inmueble</label>
-                  <select aria-label="Elija un tipo" ref={tipoInmuebleInputRef} onChange={tipoInmebleInputChangeHandler} value={tipoInmuebleIngresado}>
-                    {posiblesTiposInmuebles.map((tipo) => <option key={tipo.idTipoInmueble} value={tipo.idTipoInmueble}>{tipo.nombre}</option>)}
+                  <select
+                    aria-label="Elija un tipo"
+                    ref={tipoInmuebleInputRef}
+                    onChange={tipoInmebleInputChangeHandler}
+                    value={tipoInmuebleIngresado}
+                  >
+                    {posiblesTiposInmuebles.map((tipo) => (
+                      <option
+                        key={tipo.idTipoInmueble}
+                        value={tipo.idTipoInmueble}
+                      >
+                        {tipo.nombre}
+                      </option>
+                    ))}
                   </select>
                   {!formInputsValidity.tipoInmueble && (
                     <p>Por favor ingrese un tipo de inmueble de la lista</p>
@@ -467,12 +566,21 @@ const FormInmueble = (props) => {
               <Form.Group as={Col}>
                 <div className={localidadControlClasses}>
                   <label htmlFor="localidad">Localidad</label>
-                  <input
+                  {/* <Select
+                    className={classes.localidad}
                     ref={localidadInputRef}
-                    type="text"
-                    id="localidad"
+                    // onInputChange={localidadInputChangeHandler}
                     onChange={localidadInputChangeHandler}
+                    options={posiblesLocalidades}
+                    formatGroupLabel="Localidades"
                     value={localidadIngresada}
+                  /> */}
+                  <AsyncSelect
+                    ref={localidadInputRef}
+                    cacheOptions
+                    loadOptions={loadOptions}
+                    onChange={onInputChangeHandler}
+                    value={localidadIngresada?.value}
                   />
                   {!formInputsValidity.localidad && (
                     <p>Por favor ingrese una localidad válida</p>

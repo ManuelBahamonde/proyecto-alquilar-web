@@ -14,6 +14,13 @@
   display: block;
 }
 
+.localidad {
+  font: inherit;
+  border-radius: 4px;
+  width: 15rem;
+  /* max-width: 100%; */
+}
+
 .control input,select{
   font: inherit;
   border: 1px solid #ccc;
