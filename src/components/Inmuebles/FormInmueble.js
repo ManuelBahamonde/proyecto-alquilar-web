@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState, useEffect } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Form, Row, Col, Alert } from "react-bootstrap";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import AsyncSelect from "react-select/async";
@@ -26,7 +26,6 @@ const soloPrecio = (value) => {
 
 const FormInmueble = (prop) => {
   const [posiblesTiposInmuebles, setPosiblesTiposInmuebles] = useState([]);
-  const [posiblesLocalidades, setPosiblesLocalidades] = useState([]);
   const [hayFechaHasta, setHayFechaHasta] = useState(false);
 
   const [estamosEditando, setEstamosEditando] = useState(false);
@@ -91,17 +90,6 @@ const FormInmueble = (prop) => {
     });
   }, []);
 
-  const direccionInputRef = useRef();
-  const pisoInputRef = useRef();
-  const departamentoInputRef = useRef();
-  const precioInputRef = useRef();
-  const habitacionesInputRef = useRef();
-  const bañosInputRef = useRef();
-  const ambientesInputRef = useRef();
-  const fechaHastaInputRef = useRef();
-  const tipoInmuebleInputRef = useRef();
-  const localidadInputRef = useRef();
-
   const direccionInputChangeHandler = (event) => {
     setDireccionIngresada(event.target.value);
   };
@@ -158,7 +146,10 @@ const FormInmueble = (prop) => {
         habitaciones: parseInt(inmuebleData.habitaciones),
         baños: parseInt(inmuebleData.baños),
         ambientes: parseInt(inmuebleData.ambientes),
-        fechaHastaAlquilada: inmuebleData.fechaHastaAlquilada,
+        fechaHastaAlquilada:
+          inmuebleData.fechaHastaAlquilada === ""
+            ? null
+            : inmuebleData.fechaHastaAlquilada,
         imagenes: inmuebleData.imagenes,
         idTipoInmueble: parseInt(inmuebleData.idTipoInmueble),
         idLocalidad: parseInt(inmuebleData.idLocalidad),
@@ -183,55 +174,112 @@ const FormInmueble = (prop) => {
     }
   };
 
-  const formSubmissionHandler = (event) => {
-    event.preventDefault();
-
-    const direccionIngresada = direccionInputRef.current.value;
-    const pisoIngresado = pisoInputRef.current.value;
-    const departamentoIngresado = departamentoInputRef.current.value;
-    const precioIngresado = precioInputRef.current.value;
-    const habitacionesIngresadas = habitacionesInputRef.current.value;
-    const bañosIngresados = bañosInputRef.current.value;
-    const ambientesIngresados = ambientesInputRef.current.value;
-    const fechaHastaIngresada = fechaHastaInputRef.current.value;
-    const tipoInmuebleIngresado = tipoInmuebleInputRef.current.value;
-    const localidadIngresada = localidadInputRef.current.value;
-
-    // Validaciones:
+  // Validaciones individuales por campo
+  const validarDireccion = () => {
     const direccionIngresadaEsValido = !isEmpty(direccionIngresada);
+    setFormInputsValidity((prevState) => {
+      return { ...prevState, direccion: direccionIngresadaEsValido };
+    });
+    return direccionIngresadaEsValido;
+  };
+  const validarPiso = () => {
     const pisoIngresadoEsValido =
       isEmpty(pisoIngresado) ||
       (!isEmpty(pisoIngresado) && soloNumeros(pisoIngresado));
+    setFormInputsValidity((prevState) => {
+      return { ...prevState, piso: pisoIngresadoEsValido };
+    });
+    return pisoIngresadoEsValido;
+  };
+  const validarDepartamento = () => {
     const departamentoIngresadoEsValido = true;
+    setFormInputsValidity((prevState) => {
+      return { ...prevState, departamento: departamentoIngresadoEsValido };
+    });
+    return departamentoIngresadoEsValido;
+  };
+
+  const validarPrecio = () => {
     const precioIngresadoEsValido =
       !isEmpty(precioIngresado) && soloPrecio(precioIngresado);
+    setFormInputsValidity((prevState) => {
+      return { ...prevState, precio: precioIngresadoEsValido };
+    });
+    return precioIngresadoEsValido;
+  };
+  const validarHabitaciones = () => {
     const habitacionesIngresadasEsValido =
       isEmpty(habitacionesIngresadas) ||
       (!isEmpty(habitacionesIngresadas) && soloNumeros(habitacionesIngresadas));
+    setFormInputsValidity((prevState) => {
+      return { ...prevState, habitaciones: habitacionesIngresadasEsValido };
+    });
+    return habitacionesIngresadasEsValido;
+  };
+  const validarBaños = () => {
     const bañosIngresadosEsValido =
       isEmpty(bañosIngresados) ||
       (!isEmpty(bañosIngresados) && soloNumeros(bañosIngresados));
+    setFormInputsValidity((prevState) => {
+      return { ...prevState, baños: bañosIngresadosEsValido };
+    });
+    return bañosIngresadosEsValido;
+  };
+  const validarAmbientes = () => {
     const ambientesIngresadosEsValido =
       isEmpty(ambientesIngresados) ||
       (!isEmpty(ambientesIngresados) && soloNumeros(ambientesIngresados));
+    setFormInputsValidity((prevState) => {
+      return { ...prevState, ambientes: ambientesIngresadosEsValido };
+    });
+    return ambientesIngresadosEsValido;
+  };
+  const validarFechaHasta = () => {
     const fechaHastaIngresadaEsValido =
       isFechaValida(fechaHastaIngresada) || !hayFechaHasta;
-    const tipoInmuebleIngresadoEsValido = !isEmpty(tipoInmuebleIngresado);
-    const localidadIngresadaEsValido = localidadIngresada !== null;
-
-    // setFormInputsValidity((prevState) => {return {...prevState,direccion:false}})
-    setFormInputsValidity({
-      direccion: direccionIngresadaEsValido,
-      piso: pisoIngresadoEsValido,
-      departamento: departamentoIngresadoEsValido,
-      precio: precioIngresadoEsValido,
-      habitaciones: habitacionesIngresadasEsValido,
-      baños: bañosIngresadosEsValido,
-      ambientes: ambientesIngresadosEsValido,
-      fechaHasta: fechaHastaIngresadaEsValido,
-      tipoInmueble: tipoInmuebleIngresadoEsValido,
-      localidad: localidadIngresadaEsValido,
+    setFormInputsValidity((prevState) => {
+      return { ...prevState, fechaHasta: fechaHastaIngresadaEsValido };
     });
+    return fechaHastaIngresadaEsValido;
+  };
+  const validarTipoInmueble = () => {
+    const tipoInmuebleIngresadoEsValido = !isEmpty(tipoInmuebleIngresado);
+    setFormInputsValidity((prevState) => {
+      return { ...prevState, tipoInmuebles: tipoInmuebleIngresadoEsValido };
+    });
+    return tipoInmuebleIngresadoEsValido;
+  };
+  const validarLocalidad = () => {
+    const localidadIngresadaEsValido = localidadIngresada !== null;
+    setFormInputsValidity((prevState) => {
+      return { ...prevState, localidad: localidadIngresadaEsValido };
+    });
+    return localidadIngresadaEsValido;
+  };
+
+  const formSubmissionHandler = (event) => {
+    event.preventDefault();
+
+    // Validaciones:
+    const direccionIngresadaEsValido = validarDireccion();
+
+    const pisoIngresadoEsValido = validarPiso();
+
+    const departamentoIngresadoEsValido = validarDepartamento();
+
+    const precioIngresadoEsValido = validarPrecio();
+
+    const habitacionesIngresadasEsValido = validarHabitaciones();
+
+    const bañosIngresadosEsValido = validarBaños();
+
+    const ambientesIngresadosEsValido = validarAmbientes();
+
+    const fechaHastaIngresadaEsValido = validarFechaHasta();
+
+    const tipoInmuebleIngresadoEsValido = validarTipoInmueble();
+
+    const localidadIngresadaEsValido = validarLocalidad();
 
     const formIsValid =
       direccionIngresadaEsValido &&
@@ -396,11 +444,11 @@ const FormInmueble = (prop) => {
                 <div className={direccionControlClasses}>
                   <label htmlFor="direccion">Direccion</label>
                   <input
-                    ref={direccionInputRef}
                     type="text"
                     id="direccion"
                     onChange={direccionInputChangeHandler}
                     value={direccionIngresada}
+                    onBlur={validarDireccion}
                   />
                   {!formInputsValidity.direccion && (
                     <p>Por favor ingrese una dirección válida</p>
@@ -411,11 +459,11 @@ const FormInmueble = (prop) => {
                 <div className={pisoControlClasses}>
                   <label htmlFor="piso">Piso</label>
                   <input
-                    ref={pisoInputRef}
                     type="text"
                     id="piso"
                     onChange={pisoInputChangeHandler}
                     value={pisoIngresado}
+                    onBlur={validarPiso}
                   />
                   {!formInputsValidity.piso && (
                     <p>Por favor ingrese un piso válido (solo números)</p>
@@ -428,11 +476,11 @@ const FormInmueble = (prop) => {
                 <div className={departamentoControlClasses}>
                   <label htmlFor="departamento">Departamento</label>
                   <input
-                    ref={departamentoInputRef}
                     type="text"
                     id="departamento"
                     onChange={departamentoInputChangeHandler}
                     value={departamentoIngresado}
+                    onBlur={validarDepartamento}
                   />
                   {!formInputsValidity.departamento && (
                     <p>Por favor ingrese un depto válido</p>
@@ -443,11 +491,11 @@ const FormInmueble = (prop) => {
                 <div className={precioControlClasses}>
                   <label htmlFor="precio">Precio</label>
                   <input
-                    ref={precioInputRef}
                     type="text"
                     id="precio"
                     onChange={precioInputChangeHandler}
                     value={precioIngresado}
+                    onBlur={validarPrecio}
                   />
                   {!formInputsValidity.precio && (
                     <p>Por favor ingrese un precio válido (solo números)</p>
@@ -460,11 +508,11 @@ const FormInmueble = (prop) => {
                 <div className={habitacionesControlClasses}>
                   <label htmlFor="habitaciones">Habitaciones</label>
                   <input
-                    ref={habitacionesInputRef}
                     type="text"
                     id="habitaciones"
                     onChange={habitacionesInputChangeHandler}
                     value={habitacionesIngresadas}
+                    onBlur={validarHabitaciones}
                   />
                   {!formInputsValidity.habitaciones && (
                     <p>Por favor ingrese un número de habitaciones válido</p>
@@ -475,11 +523,11 @@ const FormInmueble = (prop) => {
                 <div className={bañosControlClasses}>
                   <label htmlFor="banos">Baños</label>
                   <input
-                    ref={bañosInputRef}
                     type="text"
                     id="banos"
                     onChange={bañosInputChangeHandler}
                     value={bañosIngresados}
+                    onBlur={validarBaños}
                   />
                   {!formInputsValidity.baños && (
                     <p>
@@ -494,11 +542,11 @@ const FormInmueble = (prop) => {
                 <div className={ambientesControlClasses}>
                   <label htmlFor="ambientes">Ambientes</label>
                   <input
-                    ref={ambientesInputRef}
                     type="text"
                     id="ambientes"
                     onChange={ambientesInputChangeHandler}
                     value={ambientesIngresados}
+                    onBlur={validarAmbientes}
                   />
                 </div>
                 {!formInputsValidity.ambientes && (
@@ -527,11 +575,11 @@ const FormInmueble = (prop) => {
                   </Row>
                   <input
                     disabled={!hayFechaHasta}
-                    ref={fechaHastaInputRef}
                     type="date"
                     id="fechaHasta"
                     onChange={fechaHastaInputChangeHandler}
                     value={fechaHastaIngresada}
+                    onBlur={validarFechaHasta}
                   />
                   {!formInputsValidity.fechaHasta && (
                     <p>Por favor ingrese una fecha válida</p>
@@ -545,9 +593,9 @@ const FormInmueble = (prop) => {
                   <label htmlFor="tipoInmueble">Tipo de inmueble</label>
                   <select
                     aria-label="Elija un tipo"
-                    ref={tipoInmuebleInputRef}
                     onChange={tipoInmebleInputChangeHandler}
                     value={tipoInmuebleIngresado}
+                    onBlur={validarTipoInmueble}
                   >
                     {posiblesTiposInmuebles.map((tipo) => (
                       <option
@@ -566,21 +614,13 @@ const FormInmueble = (prop) => {
               <Form.Group as={Col}>
                 <div className={localidadControlClasses}>
                   <label htmlFor="localidad">Localidad</label>
-                  {/* <Select
-                    className={classes.localidad}
-                    ref={localidadInputRef}
-                    // onInputChange={localidadInputChangeHandler}
-                    onChange={localidadInputChangeHandler}
-                    options={posiblesLocalidades}
-                    formatGroupLabel="Localidades"
-                    value={localidadIngresada}
-                  /> */}
                   <AsyncSelect
-                    ref={localidadInputRef}
+                    className={classes.localidad}
                     cacheOptions
                     loadOptions={loadOptions}
                     onChange={onInputChangeHandler}
                     value={localidadIngresada?.value}
+                    onBlur={validarLocalidad}
                   />
                   {!formInputsValidity.localidad && (
                     <p>Por favor ingrese una localidad válida</p>
