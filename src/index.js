@@ -7,6 +7,10 @@ import { Inmuebles, Inmueble } from './routes/inmuebles';
 import NotFound from './components/NotFound';
 import NuevoInmueble from './routes/inmuebles/nuevoInmueble';
 
+// React Notifications
+import { NotificationContainer } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
@@ -20,6 +24,8 @@ ReactDOM.render(
         </Route>
       </Routes>
     </BrowserRouter>
+
+    <NotificationContainer />
   </React.StrictMode>,
   document.getElementById('root')
 );

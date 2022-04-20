@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Badge, Card, Col, Row } from "react-bootstrap";
 import ImageGallery from 'react-image-gallery';
 import { useParams } from "react-router";
-import API from "../../api/API";
-import LoadingSpinner from "../../components/UI/LoadingSpinner";
-import months from "../../temp/Months";
+import * as API from "api/API";
+import LoadingSpinner from "components/UI/LoadingSpinner";
+import months from "temp/Months";
 
 const Inmueble = () => {
     const { idInmueble } = useParams();
@@ -14,7 +14,8 @@ const Inmueble = () => {
         API.get(`/inmueble/${idInmueble}`)
             .then((response) => {
                 setInmuebleInfo(response.data);
-            });
+            })
+            .catch(() => {});
     }, [idInmueble]);
 
     const getFormattedImages = (images) => {
@@ -58,8 +59,6 @@ const Inmueble = () => {
         emailVendedor,
         telefonoVendedor,
     } = inmuebleInfo;
-
-    console.log(imagenes);
 
     return (
         <div className="inmueble-summary p-3">

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router";
-import API from '../../api/API';
-import LoadingSpinner from "../../components/UI/LoadingSpinner";
-import InmuebleCard from "../../components/Inmuebles/InmuebleCard";
+import * as API from 'api/API';
+import LoadingSpinner from "components/UI/LoadingSpinner";
+import InmuebleCard from "components/Inmuebles/InmuebleCard";
 
 const Inmuebles = () => {
     const navigate = useNavigate();
@@ -13,7 +13,8 @@ const Inmuebles = () => {
         API.get('/inmueble')
             .then((response) => {
                 setInmuebles(response.data);
-            });
+            })
+            .catch(() => {});
     }, []);
 
     const handleInmuebleSelected = (inmueble) => {
