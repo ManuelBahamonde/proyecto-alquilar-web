@@ -326,6 +326,10 @@ const FormInmueble = ({ idInmueble }) => {
 
     if (hayFechaHasta) {
       setFechaHastaIngresada("");
+      setFormInputsValidity((prevState) => ({
+        ...prevState,
+        fechaHasta: true,
+      }));
     }
   };
 
@@ -458,36 +462,42 @@ const FormInmueble = ({ idInmueble }) => {
                     </p>
                   )}
                 </Form.Group>
+              </Row>
+              <Row className="mb-3">
                 <Form.Group as={Col}>
-                  <div className={fechaHastaControlClasses}>
-                    <Row>
-                      <Col md={12}>
-                        <input
-                          name="hayFechaHasta"
-                          type="checkbox"
-                          checked={hayFechaHasta}
-                          onChange={checkBoxHandler}
-                        />
-                      </Col>
-                      <Col>
-                        <label htmlFor="hayFechaHasta">
-                          Fecha hasta alquilada
-                        </label>
-                      </Col>
-                    </Row>
+                  <div className={classes.control}>
+                    <label htmlFor="alquilada">
+                      Alquilada
+                    </label>
                     <input
-                      disabled={!hayFechaHasta}
-                      type="date"
-                      id="fechaHasta"
-                      onChange={fechaHastaInputChangeHandler}
-                      value={fechaHastaIngresada}
-                      onBlur={validarFechaHasta}
+                      name="alquilada"
+                      type="checkbox"
+                      style={{ width: 15, marginRight: 5 }}
+                      checked={hayFechaHasta}
+                      onChange={checkBoxHandler}
                     />
-                    {!formInputsValidity.fechaHasta && (
-                      <p>Por favor ingrese una fecha válida</p>
-                    )}
                   </div>
                 </Form.Group>
+                {hayFechaHasta && (
+                  <Form.Group as={Col}>
+                    <div className={fechaHastaControlClasses}>
+                      <label htmlFor="fechaHasta">
+                        Fecha hasta alquilada
+                      </label>
+                      <input
+                        disabled={!hayFechaHasta}
+                        type="date"
+                        id="fechaHasta"
+                        onChange={fechaHastaInputChangeHandler}
+                        value={fechaHastaIngresada}
+                        onBlur={validarFechaHasta}
+                      />
+                      {!formInputsValidity.fechaHasta && (
+                        <p>Por favor ingrese una fecha válida</p>
+                      )}
+                    </div>
+                  </Form.Group>
+                )}
               </Row>
               <Row className="mb-3">
                 <Form.Group as={Col}>
