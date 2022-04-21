@@ -6,6 +6,7 @@ import Home from './routes/Home';
 import { Inmuebles, Inmueble } from './routes/inmuebles';
 import NotFound from './components/NotFound';
 import NuevoInmueble from './routes/inmuebles/nuevoInmueble';
+import EditarInmueble from 'routes/inmuebles/editarInmueble';
 
 // React Notifications
 import { NotificationContainer } from 'react-notifications';
@@ -19,6 +20,7 @@ ReactDOM.render(
           <Route index element={<Home />} />
           <Route path="inmuebles" element={<Inmuebles />} />
           <Route path="inmuebles/:idInmueble" element={<Inmueble />} />
+          <Route path="inmueblesEditMode/:idInmueble" element={<EditarInmueble />} />
           <Route path="nuevoInmueble" element={<NuevoInmueble />} />
           <Route path="*" element={<NotFound />} />
         </Route>
