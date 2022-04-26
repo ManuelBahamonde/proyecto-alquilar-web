@@ -15,13 +15,14 @@ const TurnosForm = ({ idInmueble }) => {
     const [offeredHorarios, setOfferedHorarios] = useState([]);
     const [reservedDates, setReservedDates] = useState([]);
     const [currentHorario, setCurrentHorario] = useState(null);
+    const [timeInterval, setTimeInterval] = useState(0);
 
     const getHorarios = useCallback(() => {
         setLoading(true);
 
         API.get(`horario/${idInmueble}`)
             .then((response) => {
-                const { horarios, fechasReservadas } = response.data;
+                const { duracionTurno, horarios, fechasReservadas } = response.data;
                 const formattedHorarios = horarios.map((h) => ({
                     ...h,
                     horaInicio: new Date(h.horaInicio),
@@ -31,6 +32,7 @@ const TurnosForm = ({ idInmueble }) => {
 
                 setOfferedHorarios(formattedHorarios);
                 setReservedDates(formattedFechasReservadas);
+                setTimeInterval(duracionTurno);
             })
             .catch(() => {})
             .finally(() => setLoading(false));
@@ -87,6 +89,9 @@ const TurnosForm = ({ idInmueble }) => {
 
     if (loading) return <LoadingSpinner />
 
+    // If time interval is null, Inmueble owner does not provide visits
+    if (timeInterval === null) return null;
+
     const now = new Date();
     const formattedSelectedDate = selectedDate 
         ? `${selectedDate.getDate()} de ${months[selectedDate.getMonth()]} del ${selectedDate.getFullYear()} a las ${selectedDate.toTimeString().substring(0, 5)} horas`
@@ -116,6 +121,7 @@ const TurnosForm = ({ idInmueble }) => {
                         minDate={now}
                         minTime={currentHorario?.horaInicio}
                         maxTime={currentHorario?.horaFin}
+                        timeIntervals={timeInterval}
                     />
                 </Col>
             </Row>
