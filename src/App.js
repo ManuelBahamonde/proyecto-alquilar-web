@@ -1,5 +1,6 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Outlet} from "react-router-dom";
+import 'react-image-gallery/styles/css/image-gallery.css';
 
 const App = () => {
   return (

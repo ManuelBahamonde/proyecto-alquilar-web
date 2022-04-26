@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 import * as API from "api/API";
 import LoadingSpinner from "components/UI/LoadingSpinner";
 import months from "temp/Months";
+import TurnosForm from "components/Turnos/TurnosForm";
 
 const Inmueble = () => {
     const { idInmueble } = useParams();
@@ -105,6 +106,11 @@ const Inmueble = () => {
                             </Card>
                         </Col>
                     </Row>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <TurnosForm idInmueble={idInmueble} />
                 </Col>
             </Row>
         </div>
