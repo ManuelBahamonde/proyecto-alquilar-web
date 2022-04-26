@@ -86,3 +86,13 @@
   border-color: #aa0b20;
   background-color: #ffeff1;
 }
+
+.buttonDelete {
+  font: inherit;
+  color: white;
+  cursor: pointer;
+  background-color: #aa0b20;
+  border: none;
+  border-radius: 25px;
+  padding: 0.5rem 2rem;
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import LoadingSpinner from "components/UI/LoadingSpinner";
 import AsyncSelect from "react-select/async";
@@ -7,7 +7,9 @@ import * as API from "api/API";
 import _ from "lodash";
 import { NotificationManager } from "react-notifications";
 import { useNavigate } from "react-router";
-import ImageGallery from 'react-image-gallery';
+import ImageGallery from "react-image-gallery";
+import { app } from "storage/fb";
+
 import classes from "./FormInmueble.module.css";
 
 // Validation Helpers:
@@ -21,11 +23,32 @@ const isFechaValida = (value) => {
 };
 
 const soloNumeros = (value) => {
-  return value.toString().match(/^[0-9]+$/);
+  // return value.toString().match(/^[0-9]+$/);
+  return /^[0-9]+$/.test(value.toString());
 };
 
 const soloPrecio = (value) => {
-  return value.toString().match(/^-?[0-9]+([.,][0-9]+)?$/);
+  // return value.toString().match(/^-?[0-9]+([.,][0-9]+)?$/);
+  return /^-?[0-9]+([.,][0-9]+)?$/.test(value.toString());
+};
+
+const soloImagenes = (imagenes) => {
+  var validez = true;
+  for (let i = 0; i < imagenes.length; i++) {
+    const archivo = imagenes[i];
+    const extension = archivo.name.split(".").pop();
+
+    if (
+      extension === "png" ||
+      extension === "gif" ||
+      extension === "jpeg" ||
+      extension === "jpg"
+    ) {
+    } else {
+      validez = false;
+    }
+  }
+  return validez;
 };
 
 const FormInmueble = ({ idInmueble }) => {
@@ -46,7 +69,11 @@ const FormInmueble = ({ idInmueble }) => {
   const [fechaHastaIngresada, setFechaHastaIngresada] = useState("");
   const [tipoInmuebleIngresado, setTipoInmuebleIngresado] = useState("");
   const [localidadIngresada, setLocalidadIngresada] = useState("");
-  const [imagenesIngresadas, setImagenesIngresadas] = useState("");
+  const [imagenesIngresadas, setImagenesIngresadas] = useState([]);
+
+  const [imagenesPorCargar, setImagenesPorCargar] = useState([]);
+
+  const imagesRef = useRef();
 
   const [formInputsValidity, setFormInputsValidity] = useState({
     direccion: true,
@@ -59,6 +86,7 @@ const FormInmueble = ({ idInmueble }) => {
     fechaHasta: true,
     tipoInmueble: true,
     localidad: true,
+    imagenes: true,
   });
 
   useEffect(() => {
@@ -67,7 +95,6 @@ const FormInmueble = ({ idInmueble }) => {
     if (idInmueble) {
       API.get(`/inmueble/${idInmueble}`)
         .then((response) => {
-          console.log(response.data);
           setDireccionIngresada(response.data.direccion);
           setPisoIngresado(response.data.piso ?? "");
           setDepartamentoIngresado(response.data.departamento ?? "");
@@ -107,7 +134,7 @@ const FormInmueble = ({ idInmueble }) => {
       })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, []);
+  }, [idInmueble]);
 
   const direccionInputChangeHandler = (event) => {
     setDireccionIngresada(event.target.value);
@@ -139,6 +166,10 @@ const FormInmueble = ({ idInmueble }) => {
   const localidadInputChangeHandler = (value) => {
     setLocalidadIngresada(value);
   };
+  const imagesInputChangeHandler = (value) => {
+    const imagenes = value.target.files;
+    setImagenesPorCargar(imagenes);
+  };
 
   const limpiarForm = () => {
     setDireccionIngresada("");
@@ -151,11 +182,44 @@ const FormInmueble = ({ idInmueble }) => {
     setFechaHastaIngresada("");
     setTipoInmuebleIngresado("");
     setLocalidadIngresada("");
+    setImagenesIngresadas([]);
+    setImagenesPorCargar([]);
+  };
+
+  const cargarImagenes = async () => {
+    // enlazace a los servicios de storage
+    const storageRef = app.storage().ref();
+    let imagenes = imagenesIngresadas;
+    for (let i = 0; i < imagenesPorCargar.length; i++) {
+      const imagen = imagenesPorCargar[i];
+      const imagenPath = storageRef.child(imagen.name);
+      await imagenPath.put(imagen);
+      const enlaceUrl = await imagenPath.getDownloadURL();
+      imagenes.push({
+        idImagen: null,
+        url: enlaceUrl,
+        idUsuario: null,
+        idInmueble: idInmueble,
+      });
+
+      // Por las dudas tambien las guardo en el useState actualizadas
+      setImagenesIngresadas((images) => [
+        ...images,
+        {
+          idImagen: null,
+          url: enlaceUrl,
+          idUsuario: null,
+          idInmueble: idInmueble,
+        },
+      ]);
+    }
+    return imagenes;
   };
 
   const guardarNuevoInmueble = async (inmuebleData) => {
     setLoading(true);
 
+    const imagenesCargadas = await cargarImagenes();
     const rq = {
       idInmueble: 0,
       direccion: inmuebleData.direccion,
@@ -166,7 +230,7 @@ const FormInmueble = ({ idInmueble }) => {
       baños: parseInt(inmuebleData.baños),
       ambientes: parseInt(inmuebleData.ambientes),
       fechaHastaAlquilada: inmuebleData.fechaHastaAlquilada || null,
-      imagenes: inmuebleData.imagenes,
+      imagenes: imagenesCargadas,
       idTipoInmueble: parseInt(inmuebleData.idTipoInmueble),
       idLocalidad: parseInt(inmuebleData.idLocalidad),
       idUsuario: inmuebleData.idUsuario,
@@ -179,9 +243,11 @@ const FormInmueble = ({ idInmueble }) => {
       .catch(() => {})
       .finally(() => setLoading(false));
   };
+
   const editarInmueble = async (inmuebleData) => {
     setLoading(true);
 
+    const imagenesCargadas = await cargarImagenes();
     const rq = {
       idInmueble: parseInt(inmuebleData.idInmueble),
       direccion: inmuebleData.direccion,
@@ -192,7 +258,7 @@ const FormInmueble = ({ idInmueble }) => {
       baños: parseInt(inmuebleData.baños),
       ambientes: parseInt(inmuebleData.ambientes),
       fechaHastaAlquilada: inmuebleData.fechaHastaAlquilada || null,
-      imagenes: inmuebleData.imagenes,
+      imagenes: imagenesCargadas,
       idTipoInmueble: parseInt(inmuebleData.idTipoInmueble),
       idLocalidad: parseInt(inmuebleData.idLocalidad),
       idUsuario: inmuebleData.idUsuario,
@@ -289,6 +355,14 @@ const FormInmueble = ({ idInmueble }) => {
     return localidadIngresadaEsValido;
   };
 
+  const validarImagenes = () => {
+    const imagenesPorCargarEsValido = soloImagenes(imagenesPorCargar);
+    setFormInputsValidity((prevState) => {
+      return { ...prevState, imagenes: imagenesPorCargarEsValido };
+    });
+    return imagenesPorCargarEsValido;
+  };
+
   const formSubmissionHandler = (event) => {
     event.preventDefault();
 
@@ -313,6 +387,8 @@ const FormInmueble = ({ idInmueble }) => {
 
     const localidadIngresadaEsValido = validarLocalidad();
 
+    const imagenesIngresadasSonValidas = validarImagenes();
+
     const formIsValid =
       direccionIngresadaEsValido &&
       pisoIngresadoEsValido &&
@@ -323,7 +399,8 @@ const FormInmueble = ({ idInmueble }) => {
       ambientesIngresadosEsValido &&
       fechaHastaIngresadaEsValido &&
       tipoInmuebleIngresadoEsValido &&
-      localidadIngresadaEsValido;
+      localidadIngresadaEsValido &&
+      imagenesIngresadasSonValidas;
 
     if (!formIsValid) {
       return;
@@ -341,7 +418,7 @@ const FormInmueble = ({ idInmueble }) => {
         baños: bañosIngresados,
         ambientes: ambientesIngresados,
         fechaHastaAlquilada: fechaHastaIngresada,
-        imagenes: [],
+        imagenes: imagenesIngresadas,
         idTipoInmueble: tipoInmuebleIngresado.value,
         idLocalidad: localidadIngresada.value,
         idUsuario: 4, // CAMBIAR
@@ -402,6 +479,10 @@ const FormInmueble = ({ idInmueble }) => {
     formInputsValidity.localidad ? "" : classes.invalidSelectInput
   }`;
 
+  const imagenesControlClassesSelect = `${classes.control} ${
+    formInputsValidity.imagenes ? "" : classes.invalid
+  }`;
+
   const loadOptions = _.debounce((input, callback) => {
     API.get("/localidad", { searchText: input })
       .then((response) => {
@@ -431,11 +512,20 @@ const FormInmueble = ({ idInmueble }) => {
 
   const getFormattedImages = (images) => {
     return images.map((image) => ({
-        original: image.url,
-        originalWidth: 100,
-        originalHeight: 100,
+      original: image.url,
+      originalWidth: 100,
+      originalHeight: 100,
     }));
-};
+  };
+
+
+  const onDeleteImageHandler = (event) => {
+    event.preventDefault();
+
+    setImagenesIngresadas((prevState) =>
+      prevState.filter((_, i) => i !== imagesRef.current.getCurrentIndex())
+    );
+  };
 
   return (
     <>
@@ -644,21 +734,53 @@ const FormInmueble = ({ idInmueble }) => {
               </Form.Group>
             </Row>
             <Row className="mb-3">
-              <p>Agregar imagenes +</p>
+              <Form.Group as={Col}>
+                <div className={imagenesControlClassesSelect}>
+                  <label htmlFor="imagenes">Imagenes</label>
+                  <input
+                    type="file"
+                    id="imagen"
+                    multiple="multiple" // Para tomar múltiples archivos
+                    accept="image/png, image/gif, image/jpeg" // Solo aceptamos estas extensiones
+                    onChange={imagesInputChangeHandler}
+                    onBlur={validarImagenes}
+                  />
+                  {!formInputsValidity.imagenes && (
+                    <p>
+                      Por favor ingrese imagenes válidas (solo PNG/GIF/JPEG){" "}
+                    </p>
+                  )}
+                  <p>
+                    (*) Las imagenes {idInmueble ? "nuevas" : ""} serán
+                    agregadas una vez finalizada la{" "}
+                    {idInmueble ? "edición" : "creación del inmueble"}.{" "}
+                  </p>
+                </div>
+              </Form.Group>
             </Row>
+            {imagenesIngresadas.length > 0 && (
+              <Col md={8}>
+                <ImageGallery
+                  ref={imagesRef}
+                  items={getFormattedImages(imagenesIngresadas)}
+                  showPlayButton={false}
+                  showFullscreenButton={false}
+                  showBullets={true}
+                  showIndex={true}
+                />
+                <button
+                  className={classes.buttonDelete}
+                  onClick={onDeleteImageHandler}
+                >
+                  Eliminar imagen
+                </button>
+              </Col>
+            )}
             <div className={classes.actions}>
               <button className={classes.submit}>
                 {idInmueble ? "Editar Inmueble" : "Agregar Inmueble"}
               </button>
             </div>
-            {imagenesIngresadas.length > 0 && <Col md={8}>
-              <ImageGallery
-                items={getFormattedImages(imagenesIngresadas)}
-                showPlayButton={false}
-                showFullscreenButton={false}
-                
-              />
-            </Col>}
           </Form>
         </div>
       )}
