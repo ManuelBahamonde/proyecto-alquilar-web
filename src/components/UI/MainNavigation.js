@@ -5,7 +5,7 @@ import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Outlet, useNavigate } from "react-router-dom";
 import Logo from "assets/LogoAlquilar.svg";
 import { BsFillPersonFill } from "react-icons/bs";
-import {MdHomeWork,MdAssignmentInd,MdManageAccounts,MdClose} from "react-icons/md";
+import { MdHomeWork,MdAssignmentInd,MdManageAccounts } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
 const MainNavigation = () => {

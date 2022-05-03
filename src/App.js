@@ -7,7 +7,7 @@ import EditarInmueble from "routes/Inmuebles/EditarInmueble";
 import NuevoInmueble from "routes/Inmuebles/NuevoInmueble";
 import NotFound from "components/NotFound";
 import { NotificationContainer } from "react-notifications";
-import AuthContext from "Storage/auth-context";
+import AuthContext from "./Storage/auth-context";
 import AuthPagina from "routes/Login/AuthPagina";
 import "react-notifications/lib/notifications.css";
 import Perfil from "components/Perfil/Perfil";
@@ -32,7 +32,7 @@ const App = () => {
         />
         <Route path="nuevoInmueble" element={<NuevoInmueble />} />
         {authCtx.isLoggedIn && authCtx.nombreRol==="Administrador" && <Route path="admin/verificacion" element={<VerificarInmobiliaria />} />}
-        {authCtx.isLoggedIn && !authCtx.nombreRol==="Administrador" && <Route path="solicitudesinmobiliarias" element={<Navigate replace to="/home" />} />}
+        {authCtx.isLoggedIn && !authCtx.nombreRol==="Administrador" && <Route path="admin/verificacion" element={<Navigate replace to="/home" />} />}
         <Route path="*" element={<NotFound />} />
       </Routes>
       <NotificationContainer />
