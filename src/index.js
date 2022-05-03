@@ -11,6 +11,7 @@ import EditarInmueble from 'routes/inmuebles/editarInmueble';
 // React Notifications
 import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import VerificarInmobiliaria from 'routes/VerificarInmobiliaria';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -22,6 +23,7 @@ ReactDOM.render(
           <Route path="inmuebles/:idInmueble" element={<Inmueble />} />
           <Route path="inmueblesEditMode/:idInmueble" element={<EditarInmueble />} />
           <Route path="nuevoInmueble" element={<NuevoInmueble />} />
+          <Route path="admin/verificacion" element={<VerificarInmobiliaria />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

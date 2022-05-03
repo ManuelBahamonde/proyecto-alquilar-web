@@ -13,6 +13,7 @@ const App = () => {
             <Nav className="me-auto">
               <Nav.Link href="/inmuebles">Inmuebles</Nav.Link>
               <Nav.Link href="/nuevoInmueble">Nuevo inmueble</Nav.Link>
+              <Nav.Link href="/admin/verificacion">Verificar Inmobiliarias</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
