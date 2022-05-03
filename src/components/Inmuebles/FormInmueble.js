@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import LoadingSpinner from "components/UI/LoadingSpinner";
 import AsyncSelect from "react-select/async";
@@ -8,7 +8,8 @@ import _ from "lodash";
 import { NotificationManager } from "react-notifications";
 import { useNavigate } from "react-router";
 import ImageGallery from "react-image-gallery";
-import { app } from "storage/fb";
+import AuthContext from "Storage/auth-context";
+import { app } from "Storage/fb";
 
 import classes from "./FormInmueble.module.css";
 
@@ -53,6 +54,7 @@ const soloImagenes = (imagenes) => {
 
 const FormInmueble = ({ idInmueble }) => {
   const navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
 
   const [posiblesTiposInmuebles, setPosiblesTiposInmuebles] = useState([]);
   const [hayFechaHasta, setHayFechaHasta] = useState(false);
@@ -421,7 +423,7 @@ const FormInmueble = ({ idInmueble }) => {
         imagenes: imagenesIngresadas,
         idTipoInmueble: tipoInmuebleIngresado.value,
         idLocalidad: localidadIngresada.value,
-        idUsuario: 4, // CAMBIAR
+        idUsuario: authCtx.idUsuario,
       });
     } else {
       editarInmueble({
@@ -437,7 +439,7 @@ const FormInmueble = ({ idInmueble }) => {
         imagenes: imagenesIngresadas,
         idTipoInmueble: tipoInmuebleIngresado.value,
         idLocalidad: localidadIngresada.value,
-        idUsuario: 4, // CAMBIAR
+        idUsuario: authCtx.idUsuario, 
       });
     }
   };
