@@ -1,7 +1,6 @@
 import axios from "axios";
 import { NotificationManager } from 'react-notifications';
 
-
 const methods = {
     GET: 'get',
     POST: 'post',
@@ -17,7 +16,6 @@ const API = axios.create({
 const sendRequest = async (url, method, payload) => {
     const token = localStorage.getItem("token");
     const formattedPayload = {};
-    console.log(token);
 
     if (payload) {
         if (method === methods.GET) {
@@ -35,7 +33,8 @@ const sendRequest = async (url, method, payload) => {
     })
     .catch((error) => {
         console.error(error);
-        NotificationManager.error(error.message);
+        const { response } = error;
+        NotificationManager.error(response.data.Message);
 
         throw error;
     });
