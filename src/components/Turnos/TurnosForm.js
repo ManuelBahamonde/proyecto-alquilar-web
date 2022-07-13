@@ -1,10 +1,9 @@
-import API from 'api/API';
+import * as API from 'api/API';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import diasSemana from 'consts/DiaSemana';
 
-import 'react-datepicker/dist/react-datepicker.css';
 import { NotificationManager } from 'react-notifications';
 import LoadingSpinner from 'components/UI/LoadingSpinner';
 import months from 'temp/Months';
@@ -15,7 +14,7 @@ const TurnosForm = ({ idInmueble }) => {
     const [offeredHorarios, setOfferedHorarios] = useState([]);
     const [reservedDates, setReservedDates] = useState([]);
     const [currentHorario, setCurrentHorario] = useState(null);
-    const [timeInterval, setTimeInterval] = useState(0);
+    const [timeInterval, setTimeInterval] = useState(null);
 
     const getHorarios = useCallback(() => {
         setLoading(true);
@@ -34,7 +33,7 @@ const TurnosForm = ({ idInmueble }) => {
                 setReservedDates(formattedFechasReservadas);
                 setTimeInterval(duracionTurno);
             })
-            .catch(() => {})
+            .catch(() => { })
             .finally(() => setLoading(false));
     }, [idInmueble]);
 
@@ -82,7 +81,7 @@ const TurnosForm = ({ idInmueble }) => {
                 setCurrentHorario(null);
                 getHorarios();
             })
-            .catch(() => {})
+            .catch(() => { })
             .finally(() => setLoading(false));
 
     }, [selectedDate, idInmueble, getHorarios]);
@@ -93,7 +92,7 @@ const TurnosForm = ({ idInmueble }) => {
     if (timeInterval === null) return null;
 
     const now = new Date();
-    const formattedSelectedDate = selectedDate 
+    const formattedSelectedDate = selectedDate
         ? `${selectedDate.getDate()} de ${months[selectedDate.getMonth()]} del ${selectedDate.getFullYear()} a las ${selectedDate.toTimeString().substring(0, 5)} horas`
         : null;
 
@@ -111,7 +110,7 @@ const TurnosForm = ({ idInmueble }) => {
             </Row>
             <Row>
                 <Col>
-                    <DatePicker 
+                    <DatePicker
                         selected={selectedDate}
                         onChange={handleSelectedDateChange}
                         showTimeSelect

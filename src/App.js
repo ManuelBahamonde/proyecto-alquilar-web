@@ -9,9 +9,11 @@ import NotFound from "components/NotFound";
 import { NotificationContainer } from "react-notifications";
 import AuthContext from "./Storage/auth-context";
 import AuthPagina from "routes/Login/AuthPagina";
-import "react-notifications/lib/notifications.css";
 import Perfil from "components/Perfil/Perfil";
 import VerificarInmobiliaria from "routes/VerificarInmobiliaria";
+import "react-notifications/lib/notifications.css";
+import 'react-datepicker/dist/react-datepicker.css';
+import "react-image-gallery/styles/css/image-gallery.css";
 
 const App = () => {
   const authCtx = useContext(AuthContext);
