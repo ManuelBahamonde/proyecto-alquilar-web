@@ -1,7 +1,7 @@
 import * as API from "api/API";
 import { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "Storage/auth-context";
+import AuthContext from "storage/auth-context";
 import { NotificationManager } from "react-notifications";
 import LoadingSpinner from "components/UI/LoadingSpinner";
 import classes from "./AuthForm.module.css";

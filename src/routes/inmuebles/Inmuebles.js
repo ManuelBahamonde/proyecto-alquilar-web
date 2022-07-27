@@ -13,7 +13,7 @@ const Inmuebles = () => {
       .then((response) => {
         setInmuebles(response.data);
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const handleInmuebleSelected = (inmueble) => {
@@ -28,26 +28,30 @@ const Inmuebles = () => {
       .then((response) => {
         window.location.reload(false);
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   if (inmuebles === null) return <LoadingSpinner className="loading-center" />;
 
   return (
-    <div className="inmuebles-container">
-      {inmuebles.map((inmueble) => {
-        return (
-          <InmuebleCard
-            key={inmueble.idInmueble}
-            inmueble={inmueble}
-            onSelect={() => handleInmuebleSelected(inmueble)}
-            onEdit={() => handleInmuebleEdit(inmueble)}
-            onDelete={() => handleInmuebleDelete(inmueble)}
-          />
-        );
-      })}
+    <div className="inmuebles-search">
+      <div className="filters-container">
+      </div>
+      <div className="inmuebles-container">
+        {inmuebles.map((inmueble) => {
+          return (
+            <InmuebleCard
+              key={inmueble.idInmueble}
+              inmueble={inmueble}
+              onSelect={() => handleInmuebleSelected(inmueble)}
+              onEdit={() => handleInmuebleEdit(inmueble)}
+              onDelete={() => handleInmuebleDelete(inmueble)}
+            />
+          );
+        })}
 
-      <Outlet />
+        <Outlet />
+      </div>
     </div>
   );
 };

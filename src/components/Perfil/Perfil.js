@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import AuthContext from "Storage/auth-context";
+import AuthContext from "storage/auth-context";
 
 const Perfil = () => {
   const authCtx = useContext(AuthContext);

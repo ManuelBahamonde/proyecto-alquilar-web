@@ -1,4 +1,4 @@
-import Inmuebles from "./Inmuebles";
+import Inmuebles from "./inmuebles";
 import Inmueble from "./Inmueble";
 
 export {

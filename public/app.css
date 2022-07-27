@@ -53,3 +53,7 @@
     left: 50%;
     transform: translateX(-50%);
 }
+
+.inmuebles-search {
+    flex-direction: column;
+}

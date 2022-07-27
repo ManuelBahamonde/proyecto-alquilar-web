@@ -8,8 +8,8 @@ import _ from "lodash";
 import { NotificationManager } from "react-notifications";
 import { useNavigate } from "react-router";
 import ImageGallery from "react-image-gallery";
-import AuthContext from "Storage/auth-context";
-import { app } from "Storage/fb";
+import AuthContext from "storage/auth-context";
+import { app } from "storage/fb";
 
 import classes from "./FormInmueble.module.css";
 
