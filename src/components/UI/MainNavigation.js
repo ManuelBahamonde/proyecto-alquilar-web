@@ -1,4 +1,4 @@
-import AuthContext from "Storage/auth-context";
+import AuthContext from "storage/auth-context";
 import { useContext } from "react";
 import classes from "./MainNavigation.module.css";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";

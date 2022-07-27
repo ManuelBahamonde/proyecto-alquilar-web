@@ -19,9 +19,11 @@
     place-self: center;
     margin-bottom: 3rem;
 }
+
 .inmueble-card .card-title {
     text-align: center;
 }
+
 .inmueble-card .card-footer {
     text-align: center;
     background-color: #0d6efd;
@@ -32,10 +34,12 @@
 .inmueble-summary {
     text-align: center;
 }
+
 .inmueble-summary .title {
     font-size: xx-large;
     font-weight: bold;
 }
+
 .inmueble-summary .card-footer.precio {
     background-color: #0d6efd;
     font-weight: bold;
@@ -45,6 +49,7 @@
 .home {
     text-align: center;
 }
+
 .home .integrantes {
     font-size: large;
     font-weight: bold;
@@ -53,3 +58,40 @@
     left: 50%;
     transform: translateX(-50%);
 }
+
+.inmuebles-search {
+    flex-direction: column;
+}
+
+.filters-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    align-content: center;
+}
+
+.filters-container .react-datepicker-wrapper {
+    width: inherit;
+}
+
+.search-control label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.search-control input {
+    font: inherit;
+    border-radius: 4px;
+    width: 100%;
+    text-align: left;
+    padding: 0.25rem;
+}
+
+.search-control .react-select {
+    font: inherit;
+    border-radius: 4px;
+    width: 15rem;
+}
+
+  
