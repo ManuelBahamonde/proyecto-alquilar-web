@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import LoadingSpinner from "components/UI/LoadingSpinner";
-import AsyncSelect from "react-select/async";
+import LocalidadSelect from 'components/Shared/LocalidadSelect';
 import Select from "react-select";
 import * as API from "api/API";
-import _ from "lodash";
 import { NotificationManager } from "react-notifications";
 import { useNavigate } from "react-router";
 import ImageGallery from "react-image-gallery";
@@ -485,19 +484,6 @@ const FormInmueble = ({ idInmueble }) => {
     formInputsValidity.imagenes ? "" : classes.invalid
   }`;
 
-  const loadOptions = _.debounce((input, callback) => {
-    API.get("/localidad", { searchText: input })
-      .then((response) => {
-        const localidades = response.data.map((localidad) => ({
-          value: localidad.idLocalidad,
-          label: localidad.label,
-        }));
-
-        callback(localidades);
-      })
-      .catch(() => {});
-  }, 1000);
-
   const checkBoxHandler = () => {
     setHayFechaHasta((a) => {
       return !a;
@@ -721,10 +707,9 @@ const FormInmueble = ({ idInmueble }) => {
                   >
                     Localidad
                   </label>
-                  <AsyncSelect
-                    className={localidadControlClassesSelect}
+                  <LocalidadSelect
                     cacheOptions
-                    loadOptions={loadOptions}
+                    className={localidadControlClassesSelect}
                     onChange={localidadInputChangeHandler}
                     value={localidadIngresada}
                     onBlur={validarLocalidad}
