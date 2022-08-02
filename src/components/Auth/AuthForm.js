@@ -140,7 +140,7 @@ const AuthForm = () => {
     const rolEsValido = validarRol();
     const localidadEsValida = validarLocalidad();
 
-    if (rolEsValido && localidadEsValida){
+    if (estamosLogueando || (rolEsValido && localidadEsValida)){
 
       setLoading(true);
       let url;

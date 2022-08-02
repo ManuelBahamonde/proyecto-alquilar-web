@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Layout from "components/UI/Layout";
 import Home from "routes/Home";
-import { Inmueble, Inmuebles } from "routes/inmuebles/index";
+import { Inmueble, Inmuebles } from "routes/inmuebles";
 import EditarInmueble from "routes/inmuebles/editarInmueble";
 import NuevoInmueble from "routes/inmuebles/nuevoInmueble";
 import NotFound from "components/NotFound";
