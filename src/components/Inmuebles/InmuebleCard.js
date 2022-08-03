@@ -1,7 +1,13 @@
 import React from "react";
 import { Card, Col, Row, Button } from "react-bootstrap";
 
-const InmuebleCard = ({ inmueble, onSelect, onEdit, onDelete }) => {
+const InmuebleCard = ({
+  inmueble,
+  onSelect,
+  onEdit,
+  onDelete,
+  btnVisibility = true,
+}) => {
   const {
     direccion,
     nombreVendedor,
@@ -39,8 +45,16 @@ const InmuebleCard = ({ inmueble, onSelect, onEdit, onDelete }) => {
           <Card.Text>$ {precio}</Card.Text>
         </Card.Footer>
       </div>
-      <Button variant="secondary" onClick={onEdit}>E D I T A R</Button>
-      <Button variant="danger" onClick={onDelete}>B O R R A R</Button>
+      {btnVisibility && (
+        <>
+          <Button variant="secondary" onClick={onEdit}>
+            E D I T A R
+          </Button>
+          <Button variant="danger" onClick={onDelete}>
+            B O R R A R
+          </Button>
+        </>
+      )}
     </Card>
   );
 };

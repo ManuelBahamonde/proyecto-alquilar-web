@@ -7,6 +7,7 @@ import TextBox from "components/UI/TextBox";
 import { Button } from "react-bootstrap";
 import DatePicker from 'react-datepicker';
 import LocalidadSelect from "components/Shared/LocalidadSelect";
+import InmuebleStyledCard from "components/Inmuebles/InmuebleStyledCard";
 
 const Inmuebles = () => {
   const navigate = useNavigate();
@@ -129,12 +130,13 @@ const Inmuebles = () => {
       <div className="inmuebles-container">
         {inmuebles.map((inmueble) => {
           return (
-            <InmuebleCard
+            <InmuebleStyledCard
               key={inmueble.idInmueble}
               inmueble={inmueble}
               onSelect={() => handleInmuebleSelected(inmueble)}
               onEdit={() => handleInmuebleEdit(inmueble)}
               onDelete={() => handleInmuebleDelete(inmueble)}
+              btnVisibility={false}
             />
           );
         })}

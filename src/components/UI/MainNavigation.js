@@ -5,7 +5,8 @@ import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Outlet, useNavigate } from "react-router-dom";
 import Logo from "assets/LogoAlquilar.svg";
 import { BsFillPersonFill } from "react-icons/bs";
-import { MdHomeWork,MdAssignmentInd,MdManageAccounts } from "react-icons/md";
+import { SiHomeassistant } from "react-icons/si";
+import { MdHomeWork, MdAssignmentInd, MdManageAccounts } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
 const MainNavigation = () => {
@@ -71,6 +72,12 @@ const MainNavigation = () => {
                     <MdAssignmentInd />
                     <NavLink className={classes.NavDropdownLink} to="/perfil">
                       Mi perfil
+                    </NavLink>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <SiHomeassistant />
+                    <NavLink className={classes.NavDropdownLink} to="/mispropiedades">
+                      Mis Propiedades
                     </NavLink>
                   </NavDropdown.Item>
                   <NavDropdown.Item>

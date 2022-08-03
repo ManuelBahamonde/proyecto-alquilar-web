@@ -14,6 +14,7 @@ import VerificarInmobiliaria from "routes/VerificarInmobiliaria";
 import "react-notifications/lib/notifications.css";
 import 'react-datepicker/dist/react-datepicker.css';
 import "react-image-gallery/styles/css/image-gallery.css";
+import MisPropiedades from "components/MisPropiedades/MisPropiedades";
 
 const App = () => {
   const authCtx = useContext(AuthContext);
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         {!authCtx.isLoggedIn && <Route path="/auth" element={<AuthPagina />} />}
         {authCtx.isLoggedIn && <Route path="/perfil" element={<Perfil />} />}
+        {authCtx.isLoggedIn && <Route path="/misPropiedades" element={<MisPropiedades />} />}
         {!authCtx.isLoggedIn && <Route path="/perfil" element={<Navigate replace to="/auth" />} />}
         <Route path="inmuebles" element={<Inmuebles />} />
         <Route path="inmuebles/:idInmueble" element={<Inmueble />} />
