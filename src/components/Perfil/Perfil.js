@@ -1,5 +1,5 @@
 import * as API from "api/API";
-import LocalidadSelect from "components/Shared/LocalidadSelect";
+import LocalidadSelect from "components/shared/LocalidadSelect";
 import TextBox from "components/UI/TextBox";
 import { useCallback, useContext, useEffect, useState } from "react";
 import AuthContext from "storage/auth-context";

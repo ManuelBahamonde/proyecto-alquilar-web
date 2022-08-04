@@ -1,5 +1,5 @@
 import * as API from "api/API";
-import { useState, useRef, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "storage/auth-context";
 import { NotificationManager } from "react-notifications";
@@ -31,10 +31,6 @@ const AuthForm = () => {
   // Datos particulares de una inmobiliaria:
   const [direccionIngresada, setDireccionIngresada] = useState("");
   const [pisoIngresado, setPisoIngresado] = useState("");
-  const [servicioIngresado, setServicioIngresado] = useState("");
-  const [duracionTurno, setDuracionTurno] = useState("");
-  const [logo, setLogo] = useState("");
-  const [horariosIngresados, setHorariosIngresados] = useState([]);
 
   const [formInputsValidity, setFormInputsValidity] = useState({
     rol: true,
@@ -102,35 +98,6 @@ const AuthForm = () => {
   };
   const pisoInputChangeHandler = (event) => {
     setPisoIngresado(event.target.value);
-  };
-  const servicioInputChangeHandler = (event) => {
-    setServicioIngresado(event.target.value);
-  };
-  const duracionInputChangeHandler = (value) => {
-    setDuracionTurno(value);
-  };
-  const logoInputChangeHandler = (value) => {
-    const imagen = value.target.files;
-    setLogo(imagen);
-  };
-  const horariosInputChangeHandler = (event) => {
-    setHorariosIngresados(event.target.value);
-  };
-
-  const limpiarForm = () => {
-    setRolIngresado("");
-    setUsuarioIngresado("");
-    setClaveIngresada("");
-    setNombreIngresado("");
-    setTelefonoIngresado("");
-    setEmailIngresado("");
-    setLocalidadIngresada("");
-    setDireccionIngresada("");
-    setPisoIngresado("");
-    setServicioIngresado("");
-    setDuracionTurno("");
-    setLogo("");
-    setHorariosIngresados([]);
   };
 
   const submitHandler = (event) => {
@@ -336,7 +303,7 @@ const AuthForm = () => {
                   )}
               </div>
             )}
-            {!estamosLogueando && rolIngresado.value== 4 &&(
+            {!estamosLogueando && rolIngresado.value === 4 &&(
               <div className={classes.control}>
                 <label htmlFor="direccion">Dirección inmobiliaria</label>
                 <input
@@ -346,7 +313,7 @@ const AuthForm = () => {
                 />
               </div>
             )}
-            {!estamosLogueando && rolIngresado.value== 4 &&(
+            {!estamosLogueando && rolIngresado.value === 4 &&(
               <div className={classes.control}>
                 <label htmlFor="piso">Piso</label>
                 <input

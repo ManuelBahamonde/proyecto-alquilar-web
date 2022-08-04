@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import LoadingSpinner from "components/UI/LoadingSpinner";
-import LocalidadSelect from 'components/Shared/LocalidadSelect';
+import LocalidadSelect from 'components/shared/LocalidadSelect';
 import Select from "react-select";
 import * as API from "api/API";
 import { NotificationManager } from "react-notifications";
