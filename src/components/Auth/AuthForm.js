@@ -1,5 +1,5 @@
 import * as API from "api/API";
-import { useState, useRef, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "storage/auth-context";
 import { NotificationManager } from "react-notifications";
@@ -31,10 +31,6 @@ const AuthForm = () => {
   // Datos particulares de una inmobiliaria:
   const [direccionIngresada, setDireccionIngresada] = useState("");
   const [pisoIngresado, setPisoIngresado] = useState("");
-  const [servicioIngresado, setServicioIngresado] = useState("");
-  const [duracionTurno, setDuracionTurno] = useState("");
-  const [logo, setLogo] = useState("");
-  const [horariosIngresados, setHorariosIngresados] = useState([]);
 
   const [formInputsValidity, setFormInputsValidity] = useState({
     rol: true,
@@ -102,35 +98,6 @@ const AuthForm = () => {
   };
   const pisoInputChangeHandler = (event) => {
     setPisoIngresado(event.target.value);
-  };
-  const servicioInputChangeHandler = (event) => {
-    setServicioIngresado(event.target.value);
-  };
-  const duracionInputChangeHandler = (value) => {
-    setDuracionTurno(value);
-  };
-  const logoInputChangeHandler = (value) => {
-    const imagen = value.target.files;
-    setLogo(imagen);
-  };
-  const horariosInputChangeHandler = (event) => {
-    setHorariosIngresados(event.target.value);
-  };
-
-  const limpiarForm = () => {
-    setRolIngresado("");
-    setUsuarioIngresado("");
-    setClaveIngresada("");
-    setNombreIngresado("");
-    setTelefonoIngresado("");
-    setEmailIngresado("");
-    setLocalidadIngresada("");
-    setDireccionIngresada("");
-    setPisoIngresado("");
-    setServicioIngresado("");
-    setDuracionTurno("");
-    setLogo("");
-    setHorariosIngresados([]);
   };
 
   const submitHandler = (event) => {
@@ -218,7 +185,6 @@ const AuthForm = () => {
     setFormInputsValidity((prevState) => {
       return { ...prevState, rol: rolIngresadoEsValido };
     });
-    console.log("Validez del rol: "+ rolIngresadoEsValido)
     return rolIngresadoEsValido;
   };
 
@@ -336,7 +302,7 @@ const AuthForm = () => {
                   )}
               </div>
             )}
-            {!estamosLogueando && rolIngresado.value== 4 &&(
+            {!estamosLogueando && rolIngresado.value === 4 &&(
               <div className={classes.control}>
                 <label htmlFor="direccion">Dirección inmobiliaria</label>
                 <input
@@ -346,7 +312,7 @@ const AuthForm = () => {
                 />
               </div>
             )}
-            {!estamosLogueando && rolIngresado.value== 4 &&(
+            {!estamosLogueando && rolIngresado.value === 4 &&(
               <div className={classes.control}>
                 <label htmlFor="piso">Piso</label>
                 <input
@@ -356,25 +322,6 @@ const AuthForm = () => {
                 />
               </div>
             )}
-
-            {/* Esto seguro lo hagamos en una pantalla de configuración del perfil 
-            
-            {!estamosLogueando && rolIngresado.value== 4 &&(
-              <div className={classes.control}>
-              <label htmlFor="duracionTurno">
-                Duración turnos de visitas
-              </label>
-              <Select
-                classNamePrefix="select"
-                isSearchable={true}
-                name="duracionTurno"
-                options={[{value: 0.25, label:'15 minutos'},{value: 0.5, label:'30 minutos'},{value: 0.75, label:'45 minutos'},{value: 1,label:'1 hora'},{value: 1.25,label:'1 hora y 15 minutos'},{value: 1.50,label:'1 hora y 30 minutos'},{value: 1.75,label:'1 hora y 45 minutos'}, {value: 2,label:'2 horas'}]}
-                onChange={duracionInputChangeHandler}
-                value={duracionTurno}
-                // onBlur={validarDuracion}
-              />
-            </div>
-            )} */}
             <div className={classes.actions}>
               {!loading && (
                 <button>

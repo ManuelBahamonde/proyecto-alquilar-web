@@ -1,5 +1,5 @@
 import * as API from 'api/API';
-import InmobiliariaItem from 'components/Admin/InmobiliariaItem';
+import InmobiliariaItem from 'components/admin/InmobiliariaItem';
 import Card from 'components/UI/Card';
 import LoadingSpinner from 'components/UI/LoadingSpinner';
 import React, { useCallback, useEffect, useState } from 'react';
