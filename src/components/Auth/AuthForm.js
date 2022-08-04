@@ -185,7 +185,6 @@ const AuthForm = () => {
     setFormInputsValidity((prevState) => {
       return { ...prevState, rol: rolIngresadoEsValido };
     });
-    console.log("Validez del rol: "+ rolIngresadoEsValido)
     return rolIngresadoEsValido;
   };
 
@@ -323,25 +322,6 @@ const AuthForm = () => {
                 />
               </div>
             )}
-
-            {/* Esto seguro lo hagamos en una pantalla de configuración del perfil 
-            
-            {!estamosLogueando && rolIngresado.value== 4 &&(
-              <div className={classes.control}>
-              <label htmlFor="duracionTurno">
-                Duración turnos de visitas
-              </label>
-              <Select
-                classNamePrefix="select"
-                isSearchable={true}
-                name="duracionTurno"
-                options={[{value: 0.25, label:'15 minutos'},{value: 0.5, label:'30 minutos'},{value: 0.75, label:'45 minutos'},{value: 1,label:'1 hora'},{value: 1.25,label:'1 hora y 15 minutos'},{value: 1.50,label:'1 hora y 30 minutos'},{value: 1.75,label:'1 hora y 45 minutos'}, {value: 2,label:'2 horas'}]}
-                onChange={duracionInputChangeHandler}
-                value={duracionTurno}
-                // onBlur={validarDuracion}
-              />
-            </div>
-            )} */}
             <div className={classes.actions}>
               {!loading && (
                 <button>
