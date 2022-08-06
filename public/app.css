@@ -96,4 +96,46 @@
     width: 15rem;
 }
 
-  
+.perfil-card .footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+.perfil-card .footer .submit {
+  border: 1px solid #010b5a;
+  background-color: #010b5a;
+  color: white;
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  border-radius: 25px;
+  padding: 0.5rem 2rem;
+  margin-top: 1rem;
+}
+.perfil-card .footer .submit:hover,
+.perfil-card .footer .submit:active {
+  background-color: #00359f;
+}
+
+.react-select {
+    font: inherit;
+    border-radius: 4px;
+}
+
+.react-select-label {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.horario-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.horario-card .horario-delete-icon {
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 2rem;
+    cursor: pointer;
+}
