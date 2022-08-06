@@ -24,7 +24,7 @@ const InmuebleStyledCard = ({
 
   return (
     <Card>
-      <div onClick={onSelect}>
+      <div>
         <Card.Body>
           <Container>
             <Row>
