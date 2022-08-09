@@ -2,11 +2,12 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router";
 import * as API from "api/API";
 import LoadingSpinner from "components/UI/LoadingSpinner";
-import InmuebleCard from "components/inmuebles/InmuebleCard";
+import InmuebleCard from "components/Inmuebles/InmuebleCard";
 import TextBox from "components/UI/TextBox";
 import { Button } from "react-bootstrap";
 import DatePicker from 'react-datepicker';
-import LocalidadSelect from "components/shared/LocalidadSelect";
+import LocalidadSelect from "components/Shared/LocalidadSelect";
+import InmuebleStyledCard from "components/Inmuebles/InmuebleStyledCard";
 
 const Inmuebles = () => {
   const navigate = useNavigate();
@@ -129,12 +130,13 @@ const Inmuebles = () => {
       <div className="inmuebles-container">
         {inmuebles.map((inmueble) => {
           return (
-            <InmuebleCard
+            <InmuebleStyledCard
               key={inmueble.idInmueble}
               inmueble={inmueble}
               onSelect={() => handleInmuebleSelected(inmueble)}
               onEdit={() => handleInmuebleEdit(inmueble)}
               onDelete={() => handleInmuebleDelete(inmueble)}
+              btnVisibility={false}
             />
           );
         })}
