@@ -23,7 +23,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Navigate replace to="/home" />}/>
         <Route path="/home" element={<Home />} />
-        {!authCtx.isLoggedIn && <Route path="/auth" element={<AuthPagina />} />}
+        <Route path="/auth" element={<AuthPagina />} />
         {authCtx.isLoggedIn && <Route path="/perfil" element={<Perfil />} />}
         {!authCtx.isLoggedIn && <Route path="/perfil" element={<Navigate replace to="/auth" />} />}
         <Route path="inmuebles" element={<Inmuebles />} />

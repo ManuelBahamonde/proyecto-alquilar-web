@@ -1,6 +1,5 @@
 import * as API from "api/API";
 import { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import AuthContext from "storage/auth-context";
 import { NotificationManager } from "react-notifications";
 import LoadingSpinner from "components/UI/LoadingSpinner";
@@ -36,8 +35,6 @@ const AuthForm = () => {
     rol: true,
     localidad: true,
   });
-
-  const navigate = useNavigate();
 
   const authCtx = useContext(AuthContext);
 
@@ -148,7 +145,7 @@ const AuthForm = () => {
           );
           console.log(expirationTime);
           authCtx.login(data.data, expirationTime.toISOString());
-          estamosLogueando ? navigate("/perfil") : setEstamosLogueando(true);
+          if (!estamosLogueando) setEstamosLogueando(true);
         })
         .catch(() => {})
         .finally(() => setLoading(false));
