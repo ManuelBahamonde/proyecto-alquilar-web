@@ -2,12 +2,11 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router";
 import * as API from "api/API";
 import LoadingSpinner from "components/UI/LoadingSpinner";
-import InmuebleCard from "components/Inmuebles/InmuebleCard";
 import TextBox from "components/UI/TextBox";
 import { Button } from "react-bootstrap";
 import DatePicker from 'react-datepicker';
-import LocalidadSelect from "components/Shared/LocalidadSelect";
-import InmuebleStyledCard from "components/Inmuebles/InmuebleStyledCard";
+import LocalidadSelect from "components/shared/LocalidadSelect";
+import InmuebleStyledCard from "components/inmuebles/InmuebleStyledCard";
 
 const Inmuebles = () => {
   const navigate = useNavigate();

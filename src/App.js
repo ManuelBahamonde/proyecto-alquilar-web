@@ -14,7 +14,7 @@ import VerificarInmobiliaria from "routes/VerificarInmobiliaria";
 import "react-notifications/lib/notifications.css";
 import 'react-datepicker/dist/react-datepicker.css';
 import "react-image-gallery/styles/css/image-gallery.css";
-import MisPropiedades from "components/MisPropiedades/MisPropiedades";
+import MisPropiedades from "components/misPropiedades/MisPropiedades";
 
 const App = () => {
   const authCtx = useContext(AuthContext);

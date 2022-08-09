@@ -1,5 +1,5 @@
 
-import MisPropiedades from "components/MisPropiedades/MisPropiedades";
+import MisPropiedades from "components/misPropiedades/MisPropiedades";
 
 const MisPropiedadesPagina = () => {
   return <MisPropiedades />;

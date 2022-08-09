@@ -4,8 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router";
 import * as API from "api/API";
 import LoadingSpinner from "components/UI/LoadingSpinner";
-import InmuebleCard from "components/Inmuebles/InmuebleCard";
-import InmuebleStyledCard from "components/Inmuebles/InmuebleStyledCard";
+import InmuebleStyledCard from "components/inmuebles/InmuebleStyledCard";
 import classes from "./MisPropiedades.module.css";
 
 
@@ -29,7 +28,7 @@ const MisPropiedades = () => {
         setLoading(false);
       })
       .catch(() => { });
-  }, []);
+  }, [authCtx.idUsuario]);
 
   const handleInmuebleSelected = (inmueble) => {
     navigate(`/inmuebles/${inmueble.idInmueble}`);
