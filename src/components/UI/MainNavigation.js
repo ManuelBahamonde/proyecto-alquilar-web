@@ -27,7 +27,7 @@ const MainNavigation = () => {
       <Navbar className={classes.header} variant="dark" expand="lg">
         <Container>
           {/* <Navbar.Brand className={classes.logo} href="/">AlquilAr</Navbar.Brand> */}
-          <Navbar.Brand className={classes.logo} href="/">
+          <Navbar.Brand as={NavLink} className={classes.logo} to="/">
             <img
               src={Logo}
               // width="50"
