@@ -23,7 +23,7 @@ const InmuebleStyledCard = ({
   } = inmueble;
 
   return (
-    <Card>
+    <Card className="inmueble-card" onClick={onSelect}>
       <div>
         <Card.Body>
           <Container>

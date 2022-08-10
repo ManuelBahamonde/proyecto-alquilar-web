@@ -10,7 +10,7 @@ const methods = {
 
 
 const API = axios.create({
-    baseURL: 'https://localhost:5001',
+    baseURL: 'https://localhost:44380',
 });
 
 const sendRequest = async (url, method, payload) => {
