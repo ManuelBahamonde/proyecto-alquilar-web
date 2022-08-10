@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import LoadingSpinner from "components/UI/LoadingSpinner";
 import LocalidadSelect from 'components/shared/LocalidadSelect';
-import Select from "react-select";
 import * as API from "api/API";
 import { NotificationManager } from "react-notifications";
 import { useNavigate } from "react-router";
@@ -13,6 +12,7 @@ import { app } from "storage/fb";
 import classes from "./FormInmueble.module.css";
 import TextBox from "components/UI/TextBox";
 import Checkbox from "components/shared/Checkbox";
+import TipoInmuebleSelect from "components/shared/TipoImuebleSelect";
 
 // Validation Helpers:
 const isEmpty = (value) => value.toString().trim() === "";
@@ -57,7 +57,7 @@ const FormInmueble = ({ idInmueble }) => {
   const navigate = useNavigate();
   const authCtx = useContext(AuthContext);
 
-  const [posiblesTiposInmuebles, setPosiblesTiposInmuebles] = useState([]);
+  // const [posiblesTiposInmuebles, setPosiblesTiposInmuebles] = useState([]);
   const [hayFechaHasta, setHayFechaHasta] = useState(false);
 
   const [loading, setLoading] = useState(false);
@@ -123,20 +123,21 @@ const FormInmueble = ({ idInmueble }) => {
           }
         })
         .catch(() => { });
-    }
+      }
+      setLoading(false)
 
-    // Nos traemos los posibles tipos de inmueble
-    API.get("/tipoInmueble")
-      .then((response) => {
-        const tiposInmueble = response.data.map((tipoInmueble) => ({
-          value: tipoInmueble.idTipoInmueble,
-          label: tipoInmueble.nombre,
-        }));
+    // // Nos traemos los posibles tipos de inmueble
+    // API.get("/tipoInmueble")
+    //   .then((response) => {
+    //     const tiposInmueble = response.data.map((tipoInmueble) => ({
+    //       value: tipoInmueble.idTipoInmueble,
+    //       label: tipoInmueble.nombre,
+    //     }));
 
-        setPosiblesTiposInmuebles(tiposInmueble);
-      })
-      .catch(() => { })
-      .finally(() => setLoading(false));
+    //     setPosiblesTiposInmuebles(tiposInmueble);
+    //   })
+    //   .catch(() => { })
+    //   .finally(() => setLoading(false));
   }, [idInmueble]);
 
   const direccionInputChangeHandler = (newValue) => {
@@ -628,12 +629,19 @@ const FormInmueble = ({ idInmueble }) => {
                   >
                     Tipo de inmueble
                   </label>
-                  <Select
+                  {/* <Select
                     className={tipoInmuebleControlClassesSelect}
                     classNamePrefix="select"
                     isSearchable={true}
                     name="tipoInmueble"
                     options={posiblesTiposInmuebles}
+                    onChange={tipoInmebleInputChangeHandler}
+                    value={tipoInmuebleIngresado}
+                    onBlur={validarTipoInmueble}
+                  /> */}
+                  <TipoInmuebleSelect
+                    id="tipoInmueble"
+                    className={tipoInmuebleControlClassesSelect}
                     onChange={tipoInmebleInputChangeHandler}
                     value={tipoInmuebleIngresado}
                     onBlur={validarTipoInmueble}
@@ -648,6 +656,7 @@ const FormInmueble = ({ idInmueble }) => {
                   <label
                     className={localidadControlClassesLabel}
                     htmlFor="localidad"
+                    posiblesTiposInmuebles
                   >
                     Localidad
                   </label>

@@ -6,9 +6,11 @@ import TextBox from "components/UI/TextBox";
 import { Button, Col, Row } from "react-bootstrap";
 import LocalidadSelect from "components/shared/LocalidadSelect";
 import InmuebleStyledCard from "components/inmuebles/InmuebleStyledCard";
+import { useSearchParams } from "react-router-dom";
 
 const Inmuebles = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [inmuebles, setInmuebles] = useState(null);
   const [filters, setFilters] = useState({
@@ -21,21 +23,23 @@ const Inmuebles = () => {
     precioMin: null,
     precioMax: null,
     localidad: null,
+    tipoInmueble: null,
   });
 
-  const search = useCallback(() => {
+  const search = useCallback((overrideFilters) => {
     setLoading(true);
-
+    const searchFilters = overrideFilters || filters;
     const rq = {
-      habitacionesMin: filters.habitacionesMin,
-      habitacionesMax: filters.habitacionesMax,
-      banosMin: filters.banosMin,
-      banosMax: filters.banosMax,
-      ambientesMin: filters.ambientesMin,
-      ambientesMax: filters.ambientesMax,
-      precioMin: filters.precioMin,
-      precioMax: filters.precioMax,
-      idLocalidad: filters.localidad?.value,
+      habitacionesMin: searchFilters.habitacionesMin,
+      habitacionesMax: searchFilters.habitacionesMax,
+      banosMin: searchFilters.banosMin,
+      banosMax: searchFilters.banosMax,
+      ambientesMin: searchFilters.ambientesMin,
+      ambientesMax: searchFilters.ambientesMax,
+      precioMin: searchFilters.precioMin,
+      precioMax: searchFilters.precioMax,
+      idLocalidad: searchFilters.localidad?.value,
+      idTipoInmueble: searchFilters.tipoInmueble?.value,
     };
 
     API.get("/inmueble", rq)
@@ -47,8 +51,21 @@ const Inmuebles = () => {
   }, [filters]);
 
   useEffect(() => {
-    if (inmuebles === null) search();
-  }, [inmuebles, search]);
+    if (inmuebles === null) {
+      let presetFilters = null;
+      let localidadFilter = searchParams.get('idLocalidad')
+      console.log(localidadFilter)
+      let tipoInmuebleFilter = searchParams.get('idTipoInmueble')
+      console.log(tipoInmuebleFilter)
+      if (localidadFilter || tipoInmuebleFilter ){
+        presetFilters = {
+          localidad:  { value: localidadFilter },
+          tipoInmueble: { value: tipoInmuebleFilter},
+        }
+      }
+      search(presetFilters);
+    } 
+  }, [inmuebles, search, searchParams]);
 
   const handleInmuebleSelected = (inmueble) => {
     navigate(`/inmuebles/${inmueble.idInmueble}`);

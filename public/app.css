@@ -64,13 +64,40 @@ html,body {
     text-align: center;
 }
 
-.home .integrantes {
+.home .searchContainer {
     font-size: large;
     font-weight: bold;
     position: absolute;
-    top: 50%;
+    top: 25%;
     left: 50%;
     transform: translateX(-50%);
+    background-color: #153661;
+    padding: 3em;
+    border-bottom-right-radius: 150px;
+    border-top-left-radius: 150px;
+}
+
+.home .tittle-labels {
+    font-weight: bold;
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-bottom: 0px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.home .icon {
+    margin-left: 8px;
+}
+
+.home .search-button{
+    width: 200px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    letter-spacing: 1px;
+}
+
+.home .search-control {
+    padding-bottom: 25px;
 }
 
 .inmuebles-search {
@@ -79,7 +106,6 @@ html,body {
 
 .filters-labels {
     font-weight: bold;
-    padding-bottom: 0.5em;
 }
 
 .filters-container {
