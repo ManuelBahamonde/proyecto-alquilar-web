@@ -1,14 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter  } from "react-router-dom";
+import { BrowserRouter, HashRouter  } from "react-router-dom";
 import App from "./App";
 import { AuthContextProvider } from "storage/auth-context";
 
+const Router = process.env.NODE_ENV === 'development' ? BrowserRouter : HashRouter;
+
 ReactDOM.render(
   <AuthContextProvider>
-    <BrowserRouter>
+    <Router>
       <App />
-    </BrowserRouter>
+    </Router>
   </AuthContextProvider>,
   document.getElementById('root')
 );
