@@ -1,3 +1,28 @@
+html,body {
+    height: 100%;
+    background-color: rgb(234, 243, 255);
+}
+
+.tittle-filter {
+    font-weight: bold;
+    font-size: x-large;
+    text-align: center;
+    margin-top: 30px;
+    color: rgb(19, 0, 79);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-bottom: 0px;
+    letter-spacing: 2px;
+}
+
+.tittle-labels {
+    font-weight: bold;
+    color: rgb(19, 0, 79);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-bottom: 0px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
 .inmuebles-container {
     margin-top: 1rem;
     /* display: grid; */
@@ -16,22 +41,9 @@
 }
 
 .inmueble-card {
-    width: 200px;
     cursor: pointer;
-    place-self: center;
-    margin-bottom: 3rem;
 }
 
-.inmueble-card .card-title {
-    text-align: center;
-}
-
-.inmueble-card .card-footer {
-    text-align: center;
-    background-color: #0d6efd;
-    font-weight: bold;
-    color: white;
-}
 
 .inmueble-summary {
     text-align: center;
@@ -65,10 +77,13 @@
     flex-direction: column;
 }
 
+.filters-labels {
+    font-weight: bold;
+    padding-bottom: 0.5em;
+}
+
 .filters-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 2rem;
+    padding: 2em;
     align-content: center;
 }
 
@@ -80,6 +95,9 @@
     display: block;
     font-weight: bold;
     margin-bottom: 0.5rem;
+    align-self: center;
+    align-items: center;
+    align-content: center;
 }
 
 .alquilar-control input {
@@ -93,7 +111,6 @@
 .alquilar-control .react-select {
     font: inherit;
     border-radius: 4px;
-    width: 15rem;
 }
 
 .perfil-card .footer {
@@ -146,4 +163,10 @@
 .alquilar-control.invalid input {
   border-color: #aa0b20;
   background-color: #ffeff1;
+}
+
+.button-filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

@@ -8,9 +8,12 @@ const methods = {
     DELETE: 'delete',
 };
 
+const baseURL = process.env.NODE_ENV === 'development' 
+    ? 'https://localhost:5001' // development API URL
+    : 'https://ttads-alquilar.azure-api.net/v1'; // prod API URL
 
 const API = axios.create({
-    baseURL: 'https://ttads-alquilar.azure-api.net/v1',
+    baseURL,
 });
 
 const sendRequest = async (url, method, payload) => {
