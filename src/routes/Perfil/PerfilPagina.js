@@ -1,5 +1,5 @@
 
-import Perfil from "components/Perfil/perfil";
+import Perfil from "components/perfil/Perfil";
 
 const PerfilPagina = () => {
   return <Perfil />;
