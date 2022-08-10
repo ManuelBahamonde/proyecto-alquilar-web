@@ -54,29 +54,26 @@ const MainNavigation = () => {
                   }
                   id="basic-nav-dropdown"
                 >
-                  <NavDropdown.Item>
+                  <NavDropdown.Item as={NavLink} to="/nuevoInmueble">
                     <MdHomeWork />
-                    <NavLink
-                      className={classes.NavDropdownLink}
-                      to="/nuevoInmueble"
-                    >
+                    <NavLink className={classes.NavDropdownLink}  to="/nuevoInmueble">
                       Agregar nuevo inmueble
                     </NavLink>
                   </NavDropdown.Item>
-                  <NavDropdown.Item>
+                  <NavDropdown.Item as={NavLink} to="/perfil">
                     <MdAssignmentInd />
                     <NavLink className={classes.NavDropdownLink} to="/perfil">
                       Mi perfil
                     </NavLink>
                   </NavDropdown.Item>
-                  <NavDropdown.Item>
+                  <NavDropdown.Item as={NavLink} to="/mispropiedades">
                     <SiHomeassistant />
                     <NavLink className={classes.NavDropdownLink} to="/mispropiedades">
                       Mis Propiedades
                     </NavLink>
                   </NavDropdown.Item>
                   {authCtx.nombreRol === 'Administrador' && (
-                    <NavDropdown.Item>
+                    <NavDropdown.Item as={NavLink} to="/admin/verificacion">
                       <MdManageAccounts />
                       <NavLink className={classes.NavDropdownLink} to="/admin/verificacion">
                         Solicitudes inmobiliarias

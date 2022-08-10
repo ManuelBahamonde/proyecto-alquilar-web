@@ -54,12 +54,16 @@
   color: #153661;
 }
 
-.NavDropdownLink,
-.NavDropdownLink a:hover,
-.NavDropdownLink a:active {
+.NavDropdownLink {
   text-decoration: none;
   color: #212529;
   padding-left: 0.5rem;
+}
+
+.NavDropdownLink a:hover, 
+.NavDropdownLink a:focus, 
+.NavDropdownLink a:active {
+  color: white;
 }
 
 .navDropDown {
