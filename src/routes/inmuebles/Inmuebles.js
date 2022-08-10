@@ -84,27 +84,27 @@ const Inmuebles = () => {
     <div className="inmuebles-search">
       <div className="filters-container">
         <TextBox
-          containerClassName="search-control"
+          containerClassName="alquilar-control"
           type="number"
           label="Cantidad de Habitaciones"
           value={filters.habitaciones}
           onChange={handleHabitacionesChange}
         />
         <TextBox
-          containerClassName="search-control"
+          containerClassName="alquilar-control"
           type="number"
           label="Cantidad de Baños"
           value={filters.banos}
           onChange={handleBanosChange}
         />
         <TextBox
-          containerClassName="search-control"
+          containerClassName="alquilar-control"
           type="number"
           label="Cantidad de Ambientes"
           value={filters.ambientes}
           onChange={handleAmbientesChange}
         />
-        <div className="search-control">
+        <div className="alquilar-control">
           <label>Fecha Disponibilidad</label>
           <DatePicker
             selected={filters.fechaDisponibilidad}
@@ -112,7 +112,7 @@ const Inmuebles = () => {
             minDate={new Date()}
           />
         </div>
-        <div className="search-control">
+        <div className="alquilar-control">
           <label>Localidad</label>
           <LocalidadSelect
             isClearable

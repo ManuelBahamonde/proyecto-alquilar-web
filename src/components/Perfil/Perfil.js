@@ -169,7 +169,7 @@ const Perfil = () => {
       <Form onSubmit={formSubmissionHandler}>
         <Form.Group as={Col}>
           <TextBox
-            containerClassName="search-control"
+            containerClassName="alquilar-control"
             type="text"
             label="Nombre"
             value={nombre}
@@ -178,7 +178,7 @@ const Perfil = () => {
         </Form.Group>
         <Form.Group as={Col}>
           <TextBox
-            containerClassName="search-control"
+            containerClassName="alquilar-control"
             type="text"
             label="Telefono"
             value={telefono}
@@ -187,7 +187,7 @@ const Perfil = () => {
         </Form.Group>
         <Form.Group as={Col}>
           <TextBox
-            containerClassName="search-control"
+            containerClassName="alquilar-control"
             type="text"
             label="Email"
             value={email}
@@ -206,7 +206,7 @@ const Perfil = () => {
         </Form.Group>
         <Form.Group as={Col}>
           <TextBox
-            containerClassName="search-control"
+            containerClassName="alquilar-control"
             type="text"
             label="Direccion"
             value={direccion}
@@ -215,14 +215,14 @@ const Perfil = () => {
         </Form.Group>
         <Form.Group as={Col}>
           <TextBox
-            containerClassName="search-control"
+            containerClassName="alquilar-control"
             type="number"
             label="Piso"
             value={piso}
             onChange={handlePisoChange}
           />
         </Form.Group>
-        <Form.Group as={Col} className="search-control">
+        <Form.Group as={Col} className="alquilar-control">
           <Checkbox
             label="Muestra inmuebles?"
             checked={showHorarios}

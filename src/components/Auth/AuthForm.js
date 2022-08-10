@@ -1,188 +1,112 @@
 import * as API from "api/API";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import AuthContext from "storage/auth-context";
 import { NotificationManager } from "react-notifications";
 import LoadingSpinner from "components/UI/LoadingSpinner";
-import Select from "react-select";
-import AsyncSelect from "react-select/async";
-import _ from "lodash";
 import classes from "./AuthForm.module.css";
-
-// Validation Helpers:
-const isEmpty = (value) => value.toString().trim() === "";
+import TextBox from "components/UI/TextBox";
+import LocalidadSelect from "components/shared/LocalidadSelect";
+import RolSelect from "components/shared/RolSelect";
 
 const AuthForm = () => {
-  const [estamosLogueando, setEstamosLogueando] = useState(true);
+  const [loggingIn, setLoggingIn] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [posiblesRoles, setPosiblesRoles] = useState("");
 
-  // En común login y registro:
-  const [usuarioIngresado, setUsuarioIngresado] = useState("");
-  const [claveIngresada, setClaveIngresada] = useState("");
+  // Login fields
+  const [usuario, setUsuario] = useState("");
+  const [clave, setClave] = useState("");
 
-  // Para el registro de cualquier usuario necesitamos los dos campos anteriores y:
-  const [nombreIngresado, setNombreIngresado] = useState("");
-  const [telefonoIngresado, setTelefonoIngresado] = useState("");
-  const [emailIngresado, setEmailIngresado] = useState("");
-  const [localidadIngresada, setLocalidadIngresada] = useState("");
-  const [rolIngresado, setRolIngresado] = useState("");
+  // Register fields
+  const [nombre, setNombre] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [email, setEmail] = useState("");
+  const [localidad, setLocalidad] = useState("");
+  const [rol, setRol] = useState("");
 
-  // Datos particulares de una inmobiliaria:
-  const [direccionIngresada, setDireccionIngresada] = useState("");
-  const [pisoIngresado, setPisoIngresado] = useState("");
-
-  const [formInputsValidity, setFormInputsValidity] = useState({
-    rol: true,
-    localidad: true,
-  });
+  // Role-specific fields (Inmobiliaria)
+  const [direccion, setDireccion] = useState("");
+  const [piso, setPiso] = useState("");
 
   const authCtx = useContext(AuthContext);
 
-  useEffect(() => {
-    
-    // Nos traemos los posibles roles
-    API.get("/rol/GetRolesPosiblesParaRegistro")
-      .then((response) => {
-        const roles = response.data.map((rol) => ({
-          value: rol.idRol,
-          label: rol.descripcion,
-        }));
-        console.log(roles);
-        setPosiblesRoles(roles);
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false));
-
-  }, []);
-
-
-  // InputsChangeHandlers:
+  // Handlers
   const switchAuthModeHandler = () => {
-    setEstamosLogueando((prevState) => !prevState);
+    setLoggingIn((prevState) => !prevState);
   };
   const rolInputChangeHandler = (value) => {
-    setRolIngresado(value);
-    // Limpiamos los campos propios de la inmobiliaria por si quedan sucios: 
-    setDireccionIngresada('');
-    setPisoIngresado('');
-    setFormInputsValidity((prevState) => {
-      return { ...prevState, rol: true };
-    });
+    setRol(value);
+
+    // Cleaning role-specific fields
+    setDireccion('');
+    setPiso('');
   }
-  const usuarioInputChangeHandler = (event) => {
-    setUsuarioIngresado(event.target.value);
+  const usuarioInputChangeHandler = (newValue) => {
+    setUsuario(newValue);
   };
-  const claveInputChangeHandler = (event) => {
-    setClaveIngresada(event.target.value);
+  const claveInputChangeHandler = (newValue) => {
+    setClave(newValue);
   };
-  const nombreInputChangeHandler = (event) => {
-    setNombreIngresado(event.target.value);
+  const nombreInputChangeHandler = (newValue) => {
+    setNombre(newValue);
   };
-  const telefonoInputChangeHandler = (event) => {
-    setTelefonoIngresado(event.target.value);
+  const telefonoInputChangeHandler = (newValue) => {
+    setTelefono(newValue);
   };
-  const emailInputChangeHandler = (event) => {
-    setEmailIngresado(event.target.value);
+  const emailInputChangeHandler = (newValue) => {
+    setEmail(newValue);
   };
   const localidadInputChangeHandler = (value) => {
-    setLocalidadIngresada(value);
-    setFormInputsValidity((prevState) => {
-      return { ...prevState, localidad: true };
-    });
+    setLocalidad(value);
   };
-  const direccionInputChangeHandler = (event) => {
-    setDireccionIngresada(event.target.value);
+  const direccionInputChangeHandler = (newValue) => {
+    setDireccion(newValue);
   };
-  const pisoInputChangeHandler = (event) => {
-    setPisoIngresado(event.target.value);
+  const pisoInputChangeHandler = (newValue) => {
+    setPiso(newValue);
   };
 
   const submitHandler = (event) => {
-    event.preventDefault();
+    event.preventDefault(); setLoading(true);
 
-    // optional: add validation here
-    const rolEsValido = validarRol();
-    const localidadEsValida = validarLocalidad();
-
-    if (estamosLogueando || (rolEsValido && localidadEsValida)){
-
-      setLoading(true);
-      let url;
-      if (estamosLogueando) {
-        url = "/auth/login";
-      } else {
-        url = "/auth/register";
-      }
-  
-      setLoading(true);
-    
-      let rq;
-      if (estamosLogueando){
-        rq = {
-          nombreUsuario: usuarioIngresado,
-          clave: claveIngresada,
-        };
-      } else {
-        rq = {
-          nombreUsuario: usuarioIngresado,
-          clave: claveIngresada,
-          nombre: nombreIngresado,
-          telefono: telefonoIngresado,
-          email: emailIngresado,
-          idLocalidad: localidadIngresada.value,
-          idRol: rolIngresado.value,
-          direccion: direccionIngresada,
-          piso: pisoIngresado,
-        }
-      }
-  
-      API.post(url, rq)
-        .then((data) => {
-          NotificationManager.success(estamosLogueando ? "Inicio de sesión exitoso" : "Registro exitoso");
-          const expirationTime = new Date(
-            new Date().getTime() + 86400 * 1000
-            // TODO: cambiar a new Date().getTime() + +data.expiresIn * 1000
-          );
-          console.log(expirationTime);
-          authCtx.login(data.data, expirationTime.toISOString());
-          if (!estamosLogueando) setEstamosLogueando(true);
-        })
-        .catch(() => {})
-        .finally(() => setLoading(false));
-      
+    let url;
+    if (loggingIn) {
+      url = "/auth/login";
+    } else {
+      url = "/auth/register";
     }
 
-  };
+    let rq;
+    if (loggingIn) {
+      rq = {
+        nombreUsuario: usuario,
+        clave: clave,
+      };
+    } else {
+      rq = {
+        nombreUsuario: usuario,
+        clave: clave,
+        nombre: nombre,
+        telefono: telefono,
+        email: email,
+        idLocalidad: localidad.value,
+        idRol: rol.value,
+        direccion: direccion,
+        piso: piso,
+      }
+    }
 
-
-  const loadOptions = _.debounce((input, callback) => {
-    API.get("/localidad", { searchText: input })
-      .then((response) => {
-        const localidades = response.data.map((localidad) => ({
-          value: localidad.idLocalidad,
-          label: localidad.label,
-        }));
-
-        callback(localidades);
+    API.post(url, rq)
+      .then((data) => {
+        NotificationManager.success(loggingIn ? "Inicio de sesión exitoso" : "Registro exitoso");
+        const expirationTime = new Date(
+          new Date().getTime() + 86400 * 1000
+        );
+        console.log(expirationTime);
+        authCtx.login(data.data, expirationTime.toISOString());
+        if (!loggingIn) setLoggingIn(true);
       })
-      .catch(() => {});
-  }, 1000);
-
-  const validarLocalidad = () => {
-    console.log(localidadIngresada);
-    const localidadIngresadaEsValido = !isEmpty(localidadIngresada);
-    setFormInputsValidity((prevState) => {
-      return { ...prevState, localidad: localidadIngresadaEsValido };
-    });
-    return localidadIngresadaEsValido;
-  };
-
-  const validarRol = () => {
-    const rolIngresadoEsValido = !isEmpty(rolIngresado);
-    setFormInputsValidity((prevState) => {
-      return { ...prevState, rol: rolIngresadoEsValido };
-    });
-    return rolIngresadoEsValido;
+      .catch(() => { })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -191,138 +115,90 @@ const AuthForm = () => {
         <LoadingSpinner />
       ) : (
         <section className={classes.auth}>
-          <h1>{estamosLogueando ? "Inicio de sesión" : "Registro"}</h1>
+          <h1>{loggingIn ? "Inicio de sesión" : "Registro"}</h1>
           <form onSubmit={submitHandler}>
-            <div className={classes.control}>
-              <label htmlFor="usuario">Usuario</label>
-              <input
-                type="text"
-                id="usuario"
-                required
-                onChange={usuarioInputChangeHandler}
-              />
-            </div>
-            <div className={classes.control}>
-              <label htmlFor="password">Clave</label>
-              <input
-                type="password"
-                id="password"
-                required
-                onChange={claveInputChangeHandler}
-              />
-            </div>
-            {!estamosLogueando && (
-              <div className={classes.control}>
-                <label htmlFor="nombre">Nombre</label>
-                <input
-                  type="text"
+            <TextBox
+              id="usuario"
+              type="text"
+              label="Usuario"
+              containerClassName={classes.control}
+              value={usuario}
+              onChange={usuarioInputChangeHandler}
+            />
+            <TextBox
+              id="password"
+              type="password"
+              label="Clave"
+              containerClassName={classes.control}
+              value={clave}
+              onChange={claveInputChangeHandler}
+            />
+            {!loggingIn && (
+              <>
+                <TextBox
                   id="nombre"
-                  required
+                  type="text"
+                  label="Nombre"
+                  containerClassName={classes.control}
+                  value={nombre}
                   onChange={nombreInputChangeHandler}
                 />
-              </div>
-            )}
-            {!estamosLogueando && (
-              <div className={classes.control}>
-                <label htmlFor="telefono">Telefono</label>
-                <input
-                  type="text"
+                <TextBox
                   id="telefono"
-                  required
+                  type="text"
+                  label="Telefono"
+                  containerClassName={classes.control}
+                  value={telefono}
                   onChange={telefonoInputChangeHandler}
                 />
-              </div>
-            )}
-            {!estamosLogueando && (
-              <div className={classes.control}>
-                <label htmlFor="email">Email</label>
-                <input
-                  type="text"
+                <TextBox
                   id="email"
-                  required
+                  type="text"
+                  label="Email"
+                  containerClassName={classes.control}
+                  value={email}
                   onChange={emailInputChangeHandler}
                 />
-              </div>
-            )}
-            {!estamosLogueando && 
-              <div className={classes.control}>
-                  <label
-                    htmlFor="localidad"
-                  >
-                    Localidad
-                  </label>
-                  <AsyncSelect
-                    cacheOptions
-                    required
-                    loadOptions={loadOptions}
-                    onChange={localidadInputChangeHandler}
-                    value={localidadIngresada}
-                    onBlur={validarLocalidad}
-                    styles={{
-                      option: (provided,state) => {
-                        return {
-                          ...provided,
-                          color: "black",
-                        }
-                      }
-                    }}
-                  />
-                  {!formInputsValidity.localidad && (
-                    <p className={classes.error}>Por favor ingrese una localidad válida</p>
-                  )}
-            </div>}
-            {!estamosLogueando && (
-              <div className={classes.control}>
-                <label htmlFor="Rol">
-                  Rol
-                </label>
-                <Select
-                  classNamePrefix="select"
-                  isSearchable={true}
-                  name="Rol"
-                  required
-                  options={posiblesRoles}
+                <LocalidadSelect
+                  id="localidad"
+                  label="Localidad"
+                  containerClassName={classes.control}
+                  onChange={localidadInputChangeHandler}
+                  value={localidad}
+                />
+                <RolSelect
+                  id="rol"
+                  label="Rol"
+                  containerClassName={classes.control}
                   onChange={rolInputChangeHandler}
-                  value={rolIngresado}
-                  onBlur={validarRol}
-                  styles={{
-                    option: (provided,state) => {
-                      return {
-                        ...provided,
-                        color: "black",
-                      }
-                    }
-                  }}
+                  value={rol}
                 />
-                {!formInputsValidity.rol && (
-                    <p className={classes.error}>Por favor ingrese un rol válido</p>
-                  )}
-              </div>
-            )}
-            {!estamosLogueando && rolIngresado.value === 4 &&(
-              <div className={classes.control}>
-                <label htmlFor="direccion">Dirección inmobiliaria</label>
-                <input
-                  type="text"
-                  id="direccion"
-                  onChange={direccionInputChangeHandler}
-                />
-              </div>
-            )}
-            {!estamosLogueando && rolIngresado.value === 4 &&(
-              <div className={classes.control}>
-                <label htmlFor="piso">Piso</label>
-                <input
-                  type="text"
-                  id="piso"
-                  onChange={pisoInputChangeHandler}
-                />
-              </div>
+                {rol.value === 4 && (
+                  <>
+                    <TextBox
+                      id="direccion"
+                      type="text"
+                      label="Direccion"
+                      containerClassName={classes.control}
+                      value={direccion}
+                      onChange={direccionInputChangeHandler}
+                    />
+                    <TextBox
+                      id="piso"
+                      type="text"
+                      label="Piso"
+                      containerClassName={classes.control}
+                      value={piso}
+                      onChange={pisoInputChangeHandler}
+                    />
+                  </>
+                )}
+              </>
             )}
             <div className={classes.actions}>
               {!loading && (
                 <button>
-                  {estamosLogueando ? "Ingresar" : "Crear cuenta"}
+                  {loggingIn ? "Ingresar" : "Crear cuenta"}
                 </button>
               )}
               <button
@@ -330,14 +206,15 @@ const AuthForm = () => {
                 className={classes.toggle}
                 onClick={switchAuthModeHandler}
               >
-                {estamosLogueando
+                {loggingIn
                   ? "Crear una nueva cuenta"
                   : "Iniciar sesión con una cuenta existente"}
               </button>
             </div>
           </form>
         </section>
-      )}
+      )
+      }
     </>
   );
 };

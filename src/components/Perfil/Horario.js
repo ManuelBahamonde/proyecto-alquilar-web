@@ -39,13 +39,13 @@ const Horario = ({ id, diaSemana, horaInicio, horaFin, duracionTurno, onChange, 
 
     return (
         <Card className="horario-card">
-            <div className="search-control">
+            <div className="alquilar-control">
                 <label>Dia Semana</label>
                 <DiaSemanaSelect value={diaSemana} onChange={handleDiaSemanaChange} />
             </div>
             {parsedDuracionTurno > 0 && (
                 <>
-                    <div className="search-control">
+                    <div className="alquilar-control">
                         <label>Hora Inicio</label>
                         <DatePicker
                             dateFormat="hh:mm a"
@@ -56,7 +56,7 @@ const Horario = ({ id, diaSemana, horaInicio, horaFin, duracionTurno, onChange, 
                             onChange={handleHoraInicioChange}
                         />
                     </div>
-                    <div className="search-control">
+                    <div className="alquilar-control">
                         <label>Hora Fin</label>
                         <DatePicker
                             dateFormat="hh:mm a"

@@ -1,6 +1,6 @@
-const Checkbox = ({ label, checked, onToggle }) => {
+const Checkbox = ({ containerClassName, label, checked, onToggle }) => {
     return (
-        <>
+        <div className={containerClassName || 'alquilar-checkbox'}>
             <label>{label}</label>
             <input
                 type="checkbox"
@@ -8,7 +8,7 @@ const Checkbox = ({ label, checked, onToggle }) => {
                 checked={checked}
                 onChange={onToggle}
             />
-        </>
+        </div>
     );
 };
 

@@ -50,7 +50,7 @@ const MainNavigation = () => {
                 </button>
               ) : (
                 <NavDropdown
-                className={classes.navDropDown}
+                  className={classes.navDropDown}
                   title={
                     <div>
                       <BsFillPersonFill />
@@ -80,12 +80,14 @@ const MainNavigation = () => {
                       Mis Propiedades
                     </NavLink>
                   </NavDropdown.Item>
-                  <NavDropdown.Item>
-                    <MdManageAccounts />
-                    <NavLink className={classes.NavDropdownLink} to="/solicitudesinmobiliarias">
-                      Solicitudes inmobiliarias
-                    </NavLink>
-                  </NavDropdown.Item>
+                  {authCtx.nombreRol === 'Administrador' && (
+                    <NavDropdown.Item>
+                      <MdManageAccounts />
+                      <NavLink className={classes.NavDropdownLink} to="/admin/verificacion">
+                        Solicitudes inmobiliarias
+                      </NavLink>
+                    </NavDropdown.Item>
+                  )}
                   <NavDropdown.Divider />
                   {authCtx.isLoggedIn && (
                     <NavDropdown.Item onClick={logoutHandler}>
