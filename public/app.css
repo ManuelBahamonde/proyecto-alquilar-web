@@ -91,7 +91,7 @@ html,body {
     width: inherit;
 }
 
-.search-control label {
+.alquilar-control label {
     display: block;
     font-weight: bold;
     margin-bottom: 0.5rem;
@@ -100,7 +100,7 @@ html,body {
     align-content: center;
 }
 
-.search-control input {
+.alquilar-control input {
     font: inherit;
     border-radius: 4px;
     width: 100%;
@@ -108,7 +108,7 @@ html,body {
     padding: 0.25rem;
 }
 
-.search-control .react-select {
+.alquilar-control .react-select {
     font: inherit;
     border-radius: 4px;
 }
@@ -155,6 +155,14 @@ html,body {
     margin-bottom: auto;
     font-size: 2rem;
     cursor: pointer;
+}
+
+.alquilar-control.invalid label{
+    color: #ca3e51;
+}
+.alquilar-control.invalid input {
+  border-color: #aa0b20;
+  background-color: #ffeff1;
 }
 
 .button-filter {

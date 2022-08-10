@@ -88,7 +88,7 @@ const SetupHorariosDisponiblesControl = ({ duracionTurno, horarios, onChange }) 
         <div className="horarios-disponibles-container">
             <Form.Group as={Col}>
                 <TextBox
-                    containerClassName="search-control"
+                    containerClassName="alquilar-control"
                     type="number"
                     label="Duracion Turno (minutos)"
                     value={duracionTurno}

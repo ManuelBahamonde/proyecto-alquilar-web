@@ -39,7 +39,7 @@ const MainNavigation = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link className={classes.li} href="/inmuebles">
+              <Nav.Link as={NavLink} className={classes.li} to="/inmuebles">
                 Inmuebles
               </Nav.Link>
             </Nav>
@@ -50,7 +50,7 @@ const MainNavigation = () => {
                 </button>
               ) : (
                 <NavDropdown
-                className={classes.navDropDown}
+                  className={classes.navDropDown}
                   title={
                     <div>
                       <BsFillPersonFill />
@@ -80,12 +80,14 @@ const MainNavigation = () => {
                       Mis Propiedades
                     </NavLink>
                   </NavDropdown.Item>
-                  <NavDropdown.Item>
-                    <MdManageAccounts />
-                    <NavLink className={classes.NavDropdownLink} to="/solicitudesinmobiliarias">
-                      Solicitudes inmobiliarias
-                    </NavLink>
-                  </NavDropdown.Item>
+                  {authCtx.nombreRol === 'Administrador' && (
+                    <NavDropdown.Item>
+                      <MdManageAccounts />
+                      <NavLink className={classes.NavDropdownLink} to="/admin/verificacion">
+                        Solicitudes inmobiliarias
+                      </NavLink>
+                    </NavDropdown.Item>
+                  )}
                   <NavDropdown.Divider />
                   {authCtx.isLoggedIn && (
                     <NavDropdown.Item onClick={logoutHandler}>

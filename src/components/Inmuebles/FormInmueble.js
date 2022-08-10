@@ -11,6 +11,8 @@ import AuthContext from "storage/auth-context";
 import { app } from "storage/fb";
 
 import classes from "./FormInmueble.module.css";
+import TextBox from "components/UI/TextBox";
+import Checkbox from "components/shared/Checkbox";
 
 // Validation Helpers:
 const isEmpty = (value) => value.toString().trim() === "";
@@ -120,7 +122,7 @@ const FormInmueble = ({ idInmueble }) => {
             setFechaHastaIngresada(date);
           }
         })
-        .catch(() => {});
+        .catch(() => { });
     }
 
     // Nos traemos los posibles tipos de inmueble
@@ -133,33 +135,33 @@ const FormInmueble = ({ idInmueble }) => {
 
         setPosiblesTiposInmuebles(tiposInmueble);
       })
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => setLoading(false));
   }, [idInmueble]);
 
-  const direccionInputChangeHandler = (event) => {
-    setDireccionIngresada(event.target.value);
+  const direccionInputChangeHandler = (newValue) => {
+    setDireccionIngresada(newValue);
   };
-  const pisoInputChangeHandler = (event) => {
-    setPisoIngresado(event.target.value);
+  const pisoInputChangeHandler = (newValue) => {
+    setPisoIngresado(newValue);
   };
-  const departamentoInputChangeHandler = (event) => {
-    setDepartamentoIngresado(event.target.value);
+  const departamentoInputChangeHandler = (newValue) => {
+    setDepartamentoIngresado(newValue);
   };
-  const precioInputChangeHandler = (event) => {
-    setPrecioIngresado(event.target.value);
+  const precioInputChangeHandler = (newValue) => {
+    setPrecioIngresado(newValue);
   };
-  const habitacionesInputChangeHandler = (event) => {
-    setHabitacionesIngresadas(event.target.value);
+  const habitacionesInputChangeHandler = (newValue) => {
+    setHabitacionesIngresadas(newValue);
   };
-  const bañosInputChangeHandler = (event) => {
-    setBañosIngresados(event.target.value);
+  const bañosInputChangeHandler = (newValue) => {
+    setBañosIngresados(newValue);
   };
-  const ambientesInputChangeHandler = (event) => {
-    setAmbientesIngresados(event.target.value);
+  const ambientesInputChangeHandler = (newValue) => {
+    setAmbientesIngresados(newValue);
   };
-  const fechaHastaInputChangeHandler = (event) => {
-    setFechaHastaIngresada(event.target.value);
+  const fechaHastaInputChangeHandler = (newValue) => {
+    setFechaHastaIngresada(newValue);
   };
   const tipoInmebleInputChangeHandler = (value) => {
     setTipoInmuebleIngresado(value);
@@ -241,7 +243,7 @@ const FormInmueble = ({ idInmueble }) => {
         NotificationManager.success("El inmueble fue creado correctamente.");
         limpiarForm();
       })
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => setLoading(false));
   };
 
@@ -269,7 +271,7 @@ const FormInmueble = ({ idInmueble }) => {
         NotificationManager.success("El inmueble fue editado correctamente.");
         navigate(`/inmuebles/${idInmueble}`);
       })
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => setLoading(false));
   };
 
@@ -438,51 +440,24 @@ const FormInmueble = ({ idInmueble }) => {
         imagenes: imagenesIngresadas,
         idTipoInmueble: tipoInmuebleIngresado.value,
         idLocalidad: localidadIngresada.value,
-        idUsuario: authCtx.idUsuario, 
+        idUsuario: authCtx.idUsuario,
       });
     }
   };
 
-  const direccionControlClasses = `${classes.control} ${
-    formInputsValidity.direccion ? "" : classes.invalid
-  }`;
-  const pisoControlClasses = `${classes.control} ${
-    formInputsValidity.piso ? "" : classes.invalid
-  }`;
-  const departamentoControlClasses = `${classes.control} ${
-    formInputsValidity.departamento ? "" : classes.invalid
-  }`;
-  const precioControlClasses = `${classes.control} ${
-    formInputsValidity.precio ? "" : classes.invalid
-  }`;
-  const habitacionesControlClasses = `${classes.control} ${
-    formInputsValidity.habitaciones ? "" : classes.invalid
-  }`;
-  const bañosControlClasses = `${classes.control} ${
-    formInputsValidity.baños ? "" : classes.invalid
-  }`;
-  const ambientesControlClasses = `${classes.control} ${
-    formInputsValidity.ambientes ? "" : classes.invalid
-  }`;
-  const fechaHastaControlClasses = `${classes.control} ${
-    formInputsValidity.fechaHasta ? "" : classes.invalid
-  }`;
-  const tipoInmuebleControlClassesLabel = `${classes.controlSelectLabel} ${
-    formInputsValidity.tipoInmueble ? "" : classes.invalidSelectLabel
-  }`;
-  const localidadControlClassesLabel = `${classes.controlSelectLabel} ${
-    formInputsValidity.localidad ? "" : classes.invalidSelectLabel
-  }`;
-  const tipoInmuebleControlClassesSelect = `${classes.controlSelect} ${
-    formInputsValidity.tipoInmueble ? "" : classes.invalidSelectInput
-  }`;
-  const localidadControlClassesSelect = `${classes.controlSelect} ${
-    formInputsValidity.localidad ? "" : classes.invalidSelectInput
-  }`;
+  const fechaHastaControlClasses = `${classes.control} ${formInputsValidity.fechaHasta ? "" : classes.invalid
+    }`;
+  const tipoInmuebleControlClassesLabel = `${classes.controlSelectLabel} ${formInputsValidity.tipoInmueble ? "" : classes.invalidSelectLabel
+    }`;
+  const localidadControlClassesLabel = `${classes.controlSelectLabel} ${formInputsValidity.localidad ? "" : classes.invalidSelectLabel
+    }`;
+  const tipoInmuebleControlClassesSelect = `${classes.controlSelect} ${formInputsValidity.tipoInmueble ? "" : classes.invalidSelectInput
+    }`;
+  const localidadControlClassesSelect = `${classes.controlSelect} ${formInputsValidity.localidad ? "" : classes.invalidSelectInput
+    }`;
 
-  const imagenesControlClassesSelect = `${classes.control} ${
-    formInputsValidity.imagenes ? "" : classes.invalid
-  }`;
+  const imagenesControlClassesSelect = `${classes.control} ${formInputsValidity.imagenes ? "" : classes.invalid
+    }`;
 
   const checkBoxHandler = () => {
     setHayFechaHasta((a) => {
@@ -526,135 +501,104 @@ const FormInmueble = ({ idInmueble }) => {
           <Form className={classes.form} onSubmit={formSubmissionHandler}>
             <Row className="mb-3">
               <Form.Group as={Col}>
-                <div className={direccionControlClasses}>
-                  <label htmlFor="direccion">Direccion</label>
-                  <input
-                    type="text"
-                    id="direccion"
-                    onChange={direccionInputChangeHandler}
-                    value={direccionIngresada}
-                    onBlur={validarDireccion}
-                  />
-                  {!formInputsValidity.direccion && (
-                    <p>Por favor ingrese una dirección válida</p>
-                  )}
-                </div>
+                <TextBox
+                  id="direccion"
+                  type="text"
+                  label="Direccion"
+                  containerClassName={classes.control}
+                  value={direccionIngresada}
+                  onChange={direccionInputChangeHandler}
+                  validate={validarDireccion}
+                  invalidText="Por favor ingrese una dirección válida"
+                />
               </Form.Group>
               <Form.Group as={Col}>
-                <div className={pisoControlClasses}>
-                  <label htmlFor="piso">Piso</label>
-                  <input
-                    type="text"
-                    id="piso"
-                    onChange={pisoInputChangeHandler}
-                    value={pisoIngresado}
-                    onBlur={validarPiso}
-                  />
-                  {!formInputsValidity.piso && (
-                    <p>Por favor ingrese un piso válido (solo números)</p>
-                  )}
-                </div>
+                <TextBox
+                  id="piso"
+                  type="text"
+                  label="Piso"
+                  containerClassName={classes.control}
+                  value={pisoIngresado}
+                  onChange={pisoInputChangeHandler}
+                  validate={validarPiso}
+                  invalidText="Por favor ingrese un piso válido (solo números)"
+                />
               </Form.Group>
             </Row>
             <Row className="mb-3">
               <Form.Group as={Col}>
-                <div className={departamentoControlClasses}>
-                  <label htmlFor="departamento">Departamento</label>
-                  <input
-                    type="text"
-                    id="departamento"
-                    onChange={departamentoInputChangeHandler}
-                    value={departamentoIngresado}
-                    onBlur={validarDepartamento}
-                  />
-                  {!formInputsValidity.departamento && (
-                    <p>Por favor ingrese un depto válido</p>
-                  )}
-                </div>
+                <TextBox
+                  id="departamento"
+                  type="text"
+                  label="Departamento"
+                  containerClassName={classes.control}
+                  value={departamentoIngresado}
+                  onChange={departamentoInputChangeHandler}
+                  validate={validarDepartamento}
+                  invalidText="Por favor ingrese un depto válido"
+                />
               </Form.Group>
               <Form.Group as={Col}>
-                <div className={precioControlClasses}>
-                  <label htmlFor="precio">Precio</label>
-                  <input
-                    type="text"
-                    id="precio"
-                    onChange={precioInputChangeHandler}
-                    value={precioIngresado}
-                    onBlur={validarPrecio}
-                  />
-                  {!formInputsValidity.precio && (
-                    <p>Por favor ingrese un precio válido (solo números)</p>
-                  )}
-                </div>
+                <TextBox
+                  id="precio"
+                  type="text"
+                  label="Precio"
+                  containerClassName={classes.control}
+                  value={precioIngresado}
+                  onChange={precioInputChangeHandler}
+                  validate={validarPrecio}
+                  invalidText="Por favor ingrese un precio válido (solo números)"
+                />
               </Form.Group>
             </Row>
             <Row className="mb-3">
               <Form.Group as={Col}>
-                <div className={habitacionesControlClasses}>
-                  <label htmlFor="habitaciones">Habitaciones</label>
-                  <input
-                    type="text"
-                    id="habitaciones"
-                    onChange={habitacionesInputChangeHandler}
-                    value={habitacionesIngresadas}
-                    onBlur={validarHabitaciones}
-                  />
-                  {!formInputsValidity.habitaciones && (
-                    <p>Por favor ingrese un número de habitaciones válido</p>
-                  )}
-                </div>
+                <TextBox
+                  id="numHabitaciones"
+                  type="text"
+                  label="Habitaciones"
+                  containerClassName={classes.control}
+                  value={habitacionesIngresadas}
+                  onChange={habitacionesInputChangeHandler}
+                  validate={validarHabitaciones}
+                  invalidText="Por favor ingrese un número de habitaciones válido"
+                />
               </Form.Group>
               <Form.Group as={Col}>
-                <div className={bañosControlClasses}>
-                  <label htmlFor="banos">Baños</label>
-                  <input
-                    type="text"
-                    id="banos"
-                    onChange={bañosInputChangeHandler}
-                    value={bañosIngresados}
-                    onBlur={validarBaños}
-                  />
-                  {!formInputsValidity.baños && (
-                    <p>
-                      Por favor ingrese un número de ambientes válido (solo
-                      números)
-                    </p>
-                  )}
-                </div>
+                <TextBox
+                  id="banos"
+                  type="text"
+                  label="Baños"
+                  containerClassName={classes.control}
+                  value={bañosIngresados}
+                  onChange={bañosInputChangeHandler}
+                  validate={validarBaños}
+                  invalidText="Por favor ingrese un número de baños válido (solo números)"
+                />
               </Form.Group>
             </Row>
             <Row className="mb-3">
               <Form.Group as={Col}>
-                <div className={ambientesControlClasses}>
-                  <label htmlFor="ambientes">Ambientes</label>
-                  <input
-                    type="text"
-                    id="ambientes"
-                    onChange={ambientesInputChangeHandler}
-                    value={ambientesIngresados}
-                    onBlur={validarAmbientes}
-                  />
-                </div>
-                {!formInputsValidity.ambientes && (
-                  <p>
-                    Por favor ingrese un número de ambientes válido (solo
-                    números)
-                  </p>
-                )}
+                <TextBox
+                  id="ambientes"
+                  type="text"
+                  label="Ambientes"
+                  containerClassName={classes.control}
+                  value={ambientesIngresados}
+                  onChange={ambientesInputChangeHandler}
+                  validate={validarAmbientes}
+                  invalidText="Por favor ingrese un número de ambientes válido (solo números)"
+                />
               </Form.Group>
             </Row>
             <Row className="mb-3">
               <Form.Group as={Col}>
-                <div className={classes.control}>
-                  <label htmlFor="alquilada">Alquilada</label>
-                  <input
-                    name="alquilada"
-                    type="checkbox"
-                    style={{ width: 15, marginRight: 5 }}
-                    checked={hayFechaHasta}
-                    onChange={checkBoxHandler}
-                  />
-                </div>
+                <Checkbox
+                  label="Alquilada"
+                  checked={hayFechaHasta}
+                  onToggle={checkBoxHandler}
+                  containerClassName={classes.control}
+                />
               </Form.Group>
               {hayFechaHasta && (
                 <Form.Group as={Col}>
