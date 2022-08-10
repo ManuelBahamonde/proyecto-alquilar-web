@@ -4,10 +4,8 @@ import * as API from "api/API";
 import LoadingSpinner from "components/UI/LoadingSpinner";
 import TextBox from "components/UI/TextBox";
 import { Button, Col, Row } from "react-bootstrap";
-import DatePicker from "react-datepicker";
 import LocalidadSelect from "components/shared/LocalidadSelect";
 import InmuebleStyledCard from "components/inmuebles/InmuebleStyledCard";
-import { filter } from "lodash";
 
 const Inmuebles = () => {
   const navigate = useNavigate();
@@ -42,7 +40,6 @@ const Inmuebles = () => {
 
     API.get("/inmueble", rq)
       .then((response) => {
-        console.log(response);
         setInmuebles(response.data);
         setLoading(false);
       })

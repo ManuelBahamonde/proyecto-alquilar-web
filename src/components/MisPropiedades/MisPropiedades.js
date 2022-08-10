@@ -23,7 +23,6 @@ const MisPropiedades = () => {
 
     API.get("/inmueble", rq)
       .then((response) => {
-        console.log(response);
         setInmuebles(response.data);
         setLoading(false);
       })

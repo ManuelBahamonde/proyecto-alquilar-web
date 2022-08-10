@@ -101,7 +101,6 @@ const AuthForm = () => {
         const expirationTime = new Date(
           new Date().getTime() + 86400 * 1000
         );
-        console.log(expirationTime);
         authCtx.login(data.data, expirationTime.toISOString());
         if (!loggingIn) setLoggingIn(true);
       })

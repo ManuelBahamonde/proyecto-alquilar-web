@@ -26,13 +26,9 @@ const MainNavigation = () => {
     <div className="App">
       <Navbar className={classes.header} variant="dark" expand="lg">
         <Container>
-          {/* <Navbar.Brand className={classes.logo} href="/">AlquilAr</Navbar.Brand> */}
-          <Navbar.Brand as={NavLink} className={classes.logo} to="/">
+          <Navbar.Brand as={NavLink} className={classes.logo} to="/home">
             <img
               src={Logo}
-              // width="50"
-              // height="50"
-              // className="d-inline-block align-top"
               alt="React Bootstrap logo"
             />
           </Navbar.Brand>
@@ -54,7 +50,6 @@ const MainNavigation = () => {
                   title={
                     <div>
                       <BsFillPersonFill />
-                      {/* {authCtx.nombreUsuario} */}
                     </div>
                   }
                   id="basic-nav-dropdown"

@@ -1,5 +1,5 @@
 import * as API from 'api/API';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import diasSemana from 'consts/DiaSemana';
@@ -7,8 +7,11 @@ import diasSemana from 'consts/DiaSemana';
 import { NotificationManager } from 'react-notifications';
 import LoadingSpinner from 'components/UI/LoadingSpinner';
 import months from 'temp/Months';
+import AuthContext from 'storage/auth-context';
 
 const TurnosForm = ({ idInmueble }) => {
+    const authCtx = useContext(AuthContext);
+
     const [loading, setLoading] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const [offeredHorarios, setOfferedHorarios] = useState([]);
@@ -69,7 +72,7 @@ const TurnosForm = ({ idInmueble }) => {
         formattedFecha.setMinutes(formattedFecha.getMinutes() - formattedFecha.getTimezoneOffset()); // non UTC fix
 
         const rq = {
-            idUsuario: 4, // TODO: get it from token
+            idUsuario: authCtx.idUsuario,
             idInmueble: idInmueble,
             fecha: formattedFecha,
         };
@@ -84,7 +87,7 @@ const TurnosForm = ({ idInmueble }) => {
             .catch(() => { })
             .finally(() => setLoading(false));
 
-    }, [selectedDate, idInmueble, getHorarios]);
+    }, [selectedDate, idInmueble, authCtx.idUsuario, getHorarios]);
 
     if (loading) return <LoadingSpinner />
 
