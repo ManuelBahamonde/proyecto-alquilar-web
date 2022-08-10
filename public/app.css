@@ -1,3 +1,8 @@
+html,body {
+    height: 100%;
+    background-color: rgb(234, 243, 255);
+}
+
 .tittle-filter {
     font-weight: bold;
     font-size: x-large;

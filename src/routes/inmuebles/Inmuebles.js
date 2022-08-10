@@ -7,6 +7,7 @@ import { Button, Col, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import LocalidadSelect from "components/shared/LocalidadSelect";
 import InmuebleStyledCard from "components/inmuebles/InmuebleStyledCard";
+import { filter } from "lodash";
 
 const Inmuebles = () => {
   const navigate = useNavigate();
@@ -19,7 +20,8 @@ const Inmuebles = () => {
     banosMax: null,
     ambientesMin: null,
     ambientesMax: null,
-    fechaDisponibilidad: null,
+    precioMin: null,
+    precioMax: null,
     localidad: null,
   });
 
@@ -33,7 +35,8 @@ const Inmuebles = () => {
       banosMax: filters.banosMax,
       ambientesMin: filters.ambientesMin,
       ambientesMax: filters.ambientesMax,
-      fechaDisponibilidad: filters.fechaDisponibilidad,
+      precioMin: filters.precioMin,
+      precioMax: filters.precioMax,
       idLocalidad: filters.localidad?.value,
     };
 
@@ -94,11 +97,12 @@ const Inmuebles = () => {
     setFilters((prevFilters) => ({ ...prevFilters, ambientesMax: newValue }));
   };
 
-  const handleFechaDisponibilidadChange = (newValue) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      fechaDisponibilidad: newValue,
-    }));
+  const handlePrecioMinChange = (newValue) => {
+    setFilters((prevFilters) => ({ ...prevFilters, precioMin: newValue }));
+  };
+
+  const handlePrecioMaxChange = (newValue) => {
+    setFilters((prevFilters) => ({ ...prevFilters, precioMax: newValue }));
   };
 
   const handleLocalidadChange = (newValue) => {
@@ -107,74 +111,6 @@ const Inmuebles = () => {
 
   if (loading || !inmuebles)
     return <LoadingSpinner className="loading-center" />;
-
-  //   return (
-  //     <div className="inmuebles-search">
-  //       <div className="filters-container">
-  //         <Col>
-  //           <TextBox
-  //             containerClassName="search-control"
-  //             type="number"
-  //             label="Cantidad de Habitaciones"
-  //             value={filters.habitaciones}
-  //             onChange={handleHabitacionesChange}
-  //           />
-  //           <TextBox
-  //             containerClassName="search-control"
-  //             type="number"
-  //             label="Cantidad de Baños"
-  //             value={filters.banos}
-  //             onChange={handleBanosChange}
-  //           />
-  //           <TextBox
-  //             containerClassName="search-control"
-  //             type="number"
-  //             label="Cantidad de Ambientes"
-  //             value={filters.ambientes}
-  //             onChange={handleAmbientesChange}
-  //           />
-  //         </Col>
-  //         <Col>
-  //           <div className="search-control">
-  //             <label>Fecha Disponibilidad</label>
-  //             <DatePicker
-  //               selected={filters.fechaDisponibilidad}
-  //               onChange={handleFechaDisponibilidadChange}
-  //               minDate={new Date()}
-  //             />
-  //           </div>
-  //           <div className="search-control">
-  //             <label>Localidad</label>
-  //             <LocalidadSelect
-  //               isClearable
-  //               cacheOptions
-  //               placeholder="Rosario"
-  //               onChange={handleLocalidadChange}
-  //               value={filters.localidad}
-  //             />
-  //           </div>
-  //           <Button onClick={search}>Buscar</Button>
-  //         </Col>
-  //       </div>
-  //       <div className="inmuebles-container">
-  //         {inmuebles.map((inmueble) => {
-  //           return (
-  //             <InmuebleStyledCard
-  //               key={inmueble.idInmueble}
-  //               inmueble={inmueble}
-  //               onSelect={() => handleInmuebleSelected(inmueble)}
-  //               onEdit={() => handleInmuebleEdit(inmueble)}
-  //               onDelete={() => handleInmuebleDelete(inmueble)}
-  //               btnVisibility={false}
-  //             />
-  //           );
-  //         })}
-
-  //         <Outlet />
-  //       </div>
-  //     </div>
-  //   );
-  // };
 
   return (
     <div>
@@ -245,6 +181,28 @@ const Inmuebles = () => {
                   type="number"
                   value={filters.ambientesMax}
                   onChange={handleAmbientesMaxChange}
+                  placeholder={"Max"}
+                />
+              </Col>
+            </Row>
+            <br />
+            <Row>
+              <label className="tittle-labels">Precio</label>
+              <Col>
+                <TextBox
+                  containerClassName="search-control"
+                  type="number"
+                  value={filters.precioMin}
+                  onChange={handlePrecioMinChange}
+                  placeholder={"Min"}
+                />
+              </Col>
+              <Col>
+                <TextBox
+                  containerClassName="search-control"
+                  type="number"
+                  value={filters.precioMax}
+                  onChange={handlePrecioMaxChange}
                   placeholder={"Max"}
                 />
               </Col>

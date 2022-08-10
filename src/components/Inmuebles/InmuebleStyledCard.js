@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Col, Row, Button, Container } from "react-bootstrap";
 import { MdOutlineBathtub,MdBed } from "react-icons/md"; 
+import { BsDoorOpen } from "react-icons/bs";
 import { MdEdit,MdDelete } from "react-icons/md";
 import classes from "./InmuebleStyledCard.module.css";
 
@@ -20,6 +21,7 @@ const InmuebleStyledCard = ({
     precio,
     baños,
     ambientes,
+    habitaciones,
   } = inmueble;
 
   return (
@@ -49,12 +51,15 @@ const InmuebleStyledCard = ({
                   <p className={classes.locationStyled}>{ubicacion}</p>
                 </Row>
                 <Row>
-                  <span className={classes.features}>
-                  <MdBed /> {ambientes} ambientes
-                  </span>
-                  <span className={classes.features}>
+                  {ambientes != null && <span className={classes.features}>
+                  <BsDoorOpen /> {ambientes} ambientes
+                  </span>}
+                  {baños != null && <span className={classes.features}>
                   <MdOutlineBathtub /> {baños} baños
-                  </span>
+                  </span>}
+                  {habitaciones != null && <span className={classes.features}>
+                  <MdBed /> {habitaciones} Habitaciones
+                  </span>}
                 </Row>
                 <br />
                 <Row>
