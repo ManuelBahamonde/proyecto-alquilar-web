@@ -6,7 +6,7 @@ import diasSemana from 'consts/DiaSemana';
 
 import { NotificationManager } from 'react-notifications';
 import LoadingSpinner from 'components/UI/LoadingSpinner';
-import months from 'temp/Months';
+import months from 'helpers/Months';
 import AuthContext from 'storage/auth-context';
 
 const TurnosForm = ({ idInmueble }) => {
@@ -58,9 +58,11 @@ const TurnosForm = ({ idInmueble }) => {
         return offeredHorarios.some(h => h.diaSemana === dateDiaSemana);
     }, [offeredHorarios]);
 
-    const shouldTimeBeSelectable = useCallback((dateTime) => {
+    const shouldTimeBeSelectable = useCallback((dateTime, temp) => {
         // Filtering times so we only show the ones that are not reserved yet
-        return !reservedDates.some(rd => new Date(rd).getTime() === dateTime.getTime());
+        const time = dateTime.getTime();
+
+        return !reservedDates.some(rd => new Date(rd).getTime() === time);
     }, [reservedDates]);
 
     const handleReservar = useCallback(() => {
@@ -79,7 +81,7 @@ const TurnosForm = ({ idInmueble }) => {
 
         API.post('turnoAsignado', rq)
             .then(() => {
-                NotificationManager.success("El inmueble fue creado correctamente.");
+                NotificationManager.success("El turno fue asignado correctamente.");
                 setSelectedDate(null);
                 setCurrentHorario(null);
                 getHorarios();
@@ -129,7 +131,7 @@ const TurnosForm = ({ idInmueble }) => {
             </Row>
             <Row>
                 <Col>
-                    <Button variant="primary" onClick={handleReservar}>
+                    <Button disabled={!selectedDate || !shouldTimeBeSelectable(selectedDate)} variant="primary" onClick={handleReservar}>
                         Reservar
                     </Button>
                 </Col>

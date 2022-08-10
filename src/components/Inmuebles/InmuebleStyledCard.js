@@ -25,7 +25,7 @@ const InmuebleStyledCard = ({
   } = inmueble;
 
   return (
-    <Card className="inmueble-card" onClick={onSelect}>
+    <Card className={`inmueble-card ${onSelect ? 'selectable' : ''}`} onClick={onSelect}>
       <div>
         <Card.Body>
           <Container>

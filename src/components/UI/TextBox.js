@@ -1,11 +1,13 @@
 import { useState } from "react";
 
 
-const TextBox = ({ id, label, value, onChange, validate, invalidText, containerClassName, inputClassName, ...rest }) => {
+const TextBox = ({ id, required, label, value, onChange, validate, invalidText, containerClassName, inputClassName, ...rest }) => {
     const [isValueValid, setisValueValid] = useState(true);
 
     const handleChange = (e) => {
         const newValue = e.target.value;
+
+        if (!isValueValid) setisValueValid(true);
 
         onChange(newValue);
     };
@@ -22,7 +24,11 @@ const TextBox = ({ id, label, value, onChange, validate, invalidText, containerC
 
     return (
         <div className={containerClassNames}>
-            <label htmlFor={id}>{label}</label>
+            <label htmlFor={id}>
+                {label}
+                {' '}
+                {required && <span className="required-marker">*</span>}
+            </label>
             <input
                 {...rest}
                 id={id}

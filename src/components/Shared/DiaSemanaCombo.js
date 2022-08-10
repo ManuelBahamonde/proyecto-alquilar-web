@@ -1,11 +1,11 @@
 import diasSemana from "consts/DiaSemana";
-import Select from "react-select";
+import Combo from "./Combo";
 
 const items = diasSemana.map((diaSemana) => ({ value: diaSemana, label: diaSemana }));
 
-const DiaSemanaSelect = ({ value, onChange }) => {
+const DiaSemanaCombo = ({ value, onChange }) => {
     return (
-        <Select
+        <Combo
             classNamePrefix="select"
             isSearchable={true}
             name="Dia Semana"
@@ -25,4 +25,4 @@ const DiaSemanaSelect = ({ value, onChange }) => {
     );
 };
 
-export default DiaSemanaSelect;
+export default DiaSemanaCombo;

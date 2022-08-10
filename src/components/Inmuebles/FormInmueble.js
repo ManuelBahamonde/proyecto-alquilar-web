@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import LoadingSpinner from "components/UI/LoadingSpinner";
-import LocalidadSelect from 'components/shared/LocalidadSelect';
+import LocalidadAuto from 'components/shared/LocalidadAuto';
 import * as API from "api/API";
 import { NotificationManager } from "react-notifications";
+import DatePicker from "react-datepicker";
 import { useNavigate } from "react-router";
 import ImageGallery from "react-image-gallery";
 import AuthContext from "storage/auth-context";
@@ -12,7 +13,7 @@ import { app } from "storage/fb";
 import classes from "./FormInmueble.module.css";
 import TextBox from "components/UI/TextBox";
 import Checkbox from "components/shared/Checkbox";
-import TipoInmuebleSelect from "components/shared/TipoImuebleSelect";
+import TipoInmuebleCombo from "components/shared/TipoInmuebleCombo";
 
 // Validation Helpers:
 const isEmpty = (value) => value.toString().trim() === "";
@@ -115,29 +116,13 @@ const FormInmueble = ({ idInmueble }) => {
             label: response.data.nombreCompletoLocalidad,
           });
           if (!isEmpty(response.data.fechaHastaAlquilada)) {
-            const date = new Date(response.data.fechaHastaAlquilada)
-              .toISOString()
-              .split("T")[0];
             setHayFechaHasta(true);
-            setFechaHastaIngresada(date);
+            setFechaHastaIngresada(new Date(response.data.fechaHastaAlquilada));
           }
         })
         .catch(() => { });
-      }
-      setLoading(false)
-
-    // // Nos traemos los posibles tipos de inmueble
-    // API.get("/tipoInmueble")
-    //   .then((response) => {
-    //     const tiposInmueble = response.data.map((tipoInmueble) => ({
-    //       value: tipoInmueble.idTipoInmueble,
-    //       label: tipoInmueble.nombre,
-    //     }));
-
-    //     setPosiblesTiposInmuebles(tiposInmueble);
-    //   })
-    //   .catch(() => { })
-    //   .finally(() => setLoading(false));
+    }
+    setLoading(false)
   }, [idInmueble]);
 
   const direccionInputChangeHandler = (newValue) => {
@@ -448,8 +433,6 @@ const FormInmueble = ({ idInmueble }) => {
 
   const fechaHastaControlClasses = `${classes.control} ${formInputsValidity.fechaHasta ? "" : classes.invalid
     }`;
-  const tipoInmuebleControlClassesLabel = `${classes.controlSelectLabel} ${formInputsValidity.tipoInmueble ? "" : classes.invalidSelectLabel
-    }`;
   const localidadControlClassesLabel = `${classes.controlSelectLabel} ${formInputsValidity.localidad ? "" : classes.invalidSelectLabel
     }`;
   const tipoInmuebleControlClassesSelect = `${classes.controlSelect} ${formInputsValidity.tipoInmueble ? "" : classes.invalidSelectInput
@@ -604,13 +587,12 @@ const FormInmueble = ({ idInmueble }) => {
               {hayFechaHasta && (
                 <Form.Group as={Col}>
                   <div className={fechaHastaControlClasses}>
-                    <label htmlFor="fechaHasta">Fecha hasta alquilada</label>
-                    <input
+                    <label>Fecha hasta alquilada</label>
+                    <DatePicker
                       disabled={!hayFechaHasta}
-                      type="date"
-                      id="fechaHasta"
+                      dateFormat="dd/MM/yyyy"
+                      selected={fechaHastaIngresada}
                       onChange={fechaHastaInputChangeHandler}
-                      value={fechaHastaIngresada}
                       onBlur={validarFechaHasta}
                     />
                     {!formInputsValidity.fechaHasta && (
@@ -622,34 +604,15 @@ const FormInmueble = ({ idInmueble }) => {
             </Row>
             <Row className="mb-3">
               <Form.Group as={Col}>
-                <div>
-                  <label
-                    className={tipoInmuebleControlClassesLabel}
-                    htmlFor="tipoInmueble"
-                  >
-                    Tipo de inmueble
-                  </label>
-                  {/* <Select
-                    className={tipoInmuebleControlClassesSelect}
-                    classNamePrefix="select"
-                    isSearchable={true}
-                    name="tipoInmueble"
-                    options={posiblesTiposInmuebles}
-                    onChange={tipoInmebleInputChangeHandler}
-                    value={tipoInmuebleIngresado}
-                    onBlur={validarTipoInmueble}
-                  /> */}
-                  <TipoInmuebleSelect
-                    id="tipoInmueble"
-                    className={tipoInmuebleControlClassesSelect}
-                    onChange={tipoInmebleInputChangeHandler}
-                    value={tipoInmuebleIngresado}
-                    onBlur={validarTipoInmueble}
-                  />
-                  {!formInputsValidity.tipoInmueble && (
-                    <p>Por favor ingrese un tipo de inmueble de la lista</p>
-                  )}
-                </div>
+                <TipoInmuebleCombo
+                  id="tipoInmueble"
+                  label="Tipo de inmueble"
+                  className={tipoInmuebleControlClassesSelect}
+                  onChange={tipoInmebleInputChangeHandler}
+                  value={tipoInmuebleIngresado}
+                  validate={() => !isEmpty()}
+                  invalidText="Por favor ingrese un tipo de inmueble de la lista"
+                />
               </Form.Group>
               <Form.Group as={Col}>
                 <div>
@@ -660,7 +623,7 @@ const FormInmueble = ({ idInmueble }) => {
                   >
                     Localidad
                   </label>
-                  <LocalidadSelect
+                  <LocalidadAuto
                     cacheOptions
                     className={localidadControlClassesSelect}
                     onChange={localidadInputChangeHandler}

@@ -4,7 +4,7 @@ import * as API from "api/API";
 import LoadingSpinner from "components/UI/LoadingSpinner";
 import TextBox from "components/UI/TextBox";
 import { Button, Col, Row } from "react-bootstrap";
-import LocalidadSelect from "components/shared/LocalidadSelect";
+import LocalidadAuto from "components/shared/LocalidadAuto";
 import InmuebleStyledCard from "components/inmuebles/InmuebleStyledCard";
 import { useSearchParams } from "react-router-dom";
 
@@ -50,13 +50,15 @@ const Inmuebles = () => {
       .catch(() => {});
   }, [filters]);
 
+  const handleSearch = useCallback(() => {
+    search();
+  }, [search]);
+
   useEffect(() => {
     if (inmuebles === null) {
       let presetFilters = null;
       let localidadFilter = searchParams.get('idLocalidad')
-      console.log(localidadFilter)
       let tipoInmuebleFilter = searchParams.get('idTipoInmueble')
-      console.log(tipoInmuebleFilter)
       if (localidadFilter || tipoInmuebleFilter ){
         presetFilters = {
           localidad:  { value: localidadFilter },
@@ -224,7 +226,7 @@ const Inmuebles = () => {
             <br />
             <div className="search-control">
               <label className="tittle-labels">Localidad</label>
-              <LocalidadSelect
+              <LocalidadAuto
                 isClearable
                 cacheOptions
                 placeholder="Rosario"
@@ -234,12 +236,15 @@ const Inmuebles = () => {
             </div>
             <br />
             <div className="button-filter" >
-              <Button className="button-filter" onClick={search}>Buscar</Button>
+              <Button className="button-filter" onClick={handleSearch}>Buscar</Button>
             </div>
           </div>
         </Col>
         <Col>
           <div className="inmuebles-container">
+            {inmuebles.length === 0 && (
+              <p className="no-inmuebles">Actualmente no hay ningún inmueble disponible</p>
+            )}
             {inmuebles.map((inmueble) => {
               return (
                 <InmuebleStyledCard

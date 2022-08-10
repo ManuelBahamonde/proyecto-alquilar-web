@@ -4,7 +4,7 @@ import ImageGallery from 'react-image-gallery';
 import { useParams } from "react-router";
 import * as API from "api/API";
 import LoadingSpinner from "components/UI/LoadingSpinner";
-import months from "temp/Months";
+import months from "helpers/Months";
 import TurnosForm from "components/turnos/TurnosForm";
 
 const Inmueble = () => {

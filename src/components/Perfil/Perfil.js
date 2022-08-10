@@ -1,9 +1,10 @@
 import * as API from "api/API";
 import Checkbox from "components/shared/Checkbox";
-import LocalidadSelect from "components/shared/LocalidadSelect";
+import LocalidadAuto from "components/shared/LocalidadAuto";
 import Card from "components/UI/Card";
 import LoadingSpinner from "components/UI/LoadingSpinner";
 import TextBox from "components/UI/TextBox";
+import { isDropdownItemValid, isTextValid } from "helpers/Validators";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { Col, Form } from "react-bootstrap";
 import { NotificationManager } from "react-notifications";
@@ -118,6 +119,11 @@ const Perfil = () => {
   const formSubmissionHandler = useCallback((e) => {
     e.preventDefault();
 
+    if (!form.nombre || !form.telefono || !form.email || !form.localidad || !form.direccion) {
+      NotificationManager.error('Revise los campos requeridos.');
+      return;
+    }
+
     setLoading(true);
 
     const parseHorarios = (horarios) => {
@@ -133,7 +139,7 @@ const Perfil = () => {
       nombre: form.nombre,
       telefono: form.telefono,
       email: form.email,
-      idLocalidad: form.localidad.value,
+      idLocalidad: form.localidad?.value,
       direccion: form.direccion,
       piso: form.piso,
       duracionTurno: form.showHorarios ? form.duracionTurno : null,
@@ -169,48 +175,63 @@ const Perfil = () => {
       <Form onSubmit={formSubmissionHandler}>
         <Form.Group as={Col}>
           <TextBox
+            required
             containerClassName="alquilar-control"
             type="text"
             label="Nombre"
             value={nombre}
             onChange={handleNombreChange}
+            validate={isTextValid}
+            invalidText="El Nombre especificado no es valido"
           />
         </Form.Group>
         <Form.Group as={Col}>
           <TextBox
+            required
             containerClassName="alquilar-control"
             type="text"
             label="Telefono"
             value={telefono}
             onChange={handleTelefonoChange}
+            validate={isTextValid}
+            invalidText="El Telefono especificado no es valido"
           />
         </Form.Group>
         <Form.Group as={Col}>
           <TextBox
+            required
             containerClassName="alquilar-control"
             type="text"
             label="Email"
             value={email}
             onChange={handleEmailChange}
+            validate={isTextValid}
+            invalidText="El Email especificado no es valido"
           />
         </Form.Group>
         <Form.Group as={Col}>
-          <LocalidadSelect
+          <LocalidadAuto
+            required
             label="Localidad"
             isClearable
             cacheOptions
             placeholder="Rosario"
             onChange={handleLocalidadChange}
             value={localidad}
+            validate={isDropdownItemValid}
+            invalidText="La Localidad especificada no es valida"
           />
         </Form.Group>
         <Form.Group as={Col}>
           <TextBox
+            required
             containerClassName="alquilar-control"
             type="text"
             label="Direccion"
             value={direccion}
             onChange={handleDireccionChange}
+            validate={isTextValid}
+            invalidText="La Direccion especificada no es valido"
           />
         </Form.Group>
         <Form.Group as={Col}>

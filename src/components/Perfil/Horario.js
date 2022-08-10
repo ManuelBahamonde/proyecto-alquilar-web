@@ -1,4 +1,4 @@
-import DiaSemanaSelect from "components/shared/DiaSemanaSelect";
+import DiaSemanaSelect from "components/shared/DiaSemanaCombo";
 import Card from "components/UI/Card";
 import { useCallback, useMemo } from "react";
 import DatePicker from "react-datepicker";

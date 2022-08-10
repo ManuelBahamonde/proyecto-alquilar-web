@@ -33,6 +33,12 @@ html,body {
     margin-right: 50px;
 }
 
+.inmuebles-container .no-inmuebles {
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
+}
+
 .loading-center {
     position: absolute;
     top: 50%;
@@ -40,7 +46,7 @@ html,body {
     transform: translateX(-50%);
 }
 
-.inmueble-card {
+.inmueble-card.selectable {
     cursor: pointer;
 }
 
@@ -189,6 +195,16 @@ html,body {
 .alquilar-control.invalid input {
   border-color: #aa0b20;
   background-color: #ffeff1;
+}
+.alquilar-control.invalid p {
+    color: #ca3e51;
+}
+
+.alquilar-control .required-marker {
+    position: absolute;
+    color: red;
+    font-size: small;
+    margin-left: 3px;
 }
 
 .button-filter {

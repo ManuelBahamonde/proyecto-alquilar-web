@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router";
-import LocalidadSelect from "components/shared/LocalidadSelect";
-import TipoInmuebleSelect from "components/shared/TipoImuebleSelect";
+import LocalidadAuto from "components/shared/LocalidadAuto";
+import TipoInmuebleCombo from "components/shared/TipoInmuebleCombo";
 import { BsSearch } from "react-icons/bs";
 
 const Home = () => {
@@ -51,7 +51,7 @@ const Home = () => {
                         <Col>
                             <div className="search-control">
                                 <label className="tittle-labels">Localidad</label>
-                                <LocalidadSelect
+                                <LocalidadAuto
                                     isClearable
                                     cacheOptions
                                     placeholder="Rosario"
@@ -63,7 +63,7 @@ const Home = () => {
                         <Col>
                             <div className="search-control">
                                 <label className="tittle-labels">Tipo</label>
-                                <TipoInmuebleSelect
+                                <TipoInmuebleCombo
                                     id="tipoInmueble"
                                     placeholder="Departamento"
                                     onChange={tipoInmebleInputChangeHandler}

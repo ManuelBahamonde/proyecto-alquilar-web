@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import AuthContext from "storage/auth-context";
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router";
@@ -6,6 +6,7 @@ import * as API from "api/API";
 import LoadingSpinner from "components/UI/LoadingSpinner";
 import InmuebleStyledCard from "components/inmuebles/InmuebleStyledCard";
 import classes from "./MisPropiedades.module.css";
+import { NotificationManager } from "react-notifications";
 
 
 const MisPropiedades = () => {
@@ -14,7 +15,7 @@ const MisPropiedades = () => {
   const [loading, setLoading] = useState(false);
   const [inmuebles, setInmuebles] = useState(null);
 
-  useEffect(() => {
+  const getUserInmuebles = useCallback(() => {
     setLoading(true);
 
     const rq = {
@@ -29,17 +30,20 @@ const MisPropiedades = () => {
       .catch(() => { });
   }, [authCtx.idUsuario]);
 
-  const handleInmuebleSelected = (inmueble) => {
-    navigate(`/inmuebles/${inmueble.idInmueble}`);
-  };
+  useEffect(() => {
+    getUserInmuebles();
+  }, [getUserInmuebles]);
 
   const handleInmuebleEdit = (inmueble) => {
     navigate(`/inmueblesEditMode/${inmueble.idInmueble}`);
   };
   const handleInmuebleDelete = (inmueble) => {
+    setLoading(true);
+
     API.del(`/inmueble/${inmueble.idInmueble}`)
       .then(() => {
-        window.location.reload(false);
+        NotificationManager.success('El Inmueble fue eliminado correctamente!');
+        getUserInmuebles();
       })
       .catch(() => { });
   };
@@ -57,7 +61,6 @@ const MisPropiedades = () => {
             <InmuebleStyledCard
               key={inmueble.idInmueble}
               inmueble={inmueble}
-              onSelect={() => handleInmuebleSelected(inmueble)}
               onEdit={() => handleInmuebleEdit(inmueble)}
               onDelete={() => handleInmuebleDelete(inmueble)}
             />
