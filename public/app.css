@@ -21,6 +21,9 @@ html, body {
     margin-bottom: 0px;
     letter-spacing: 2px;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .inmuebles-container {
@@ -37,6 +40,8 @@ html, body {
     font-size: large;
     font-weight: bold;
     text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    letter-spacing: 2px;
 }
 
 .loading-center {
@@ -130,6 +135,7 @@ html, body {
     align-self: center;
     align-items: center;
     align-content: center;
+    
 }
 
 .alquilar-control input {

@@ -7,6 +7,7 @@ import { Button, Col, Row } from "react-bootstrap";
 import LocalidadAuto from "components/shared/LocalidadAuto";
 import InmuebleStyledCard from "components/inmuebles/InmuebleStyledCard";
 import { useSearchParams } from "react-router-dom";
+import TipoInmuebleCombo from "components/shared/TipoInmuebleCombo";
 
 const Inmuebles = () => {
   const navigate = useNavigate();
@@ -26,29 +27,32 @@ const Inmuebles = () => {
     tipoInmueble: null,
   });
 
-  const search = useCallback((overrideFilters) => {
-    setLoading(true);
-    const searchFilters = overrideFilters || filters;
-    const rq = {
-      habitacionesMin: searchFilters.habitacionesMin,
-      habitacionesMax: searchFilters.habitacionesMax,
-      banosMin: searchFilters.banosMin,
-      banosMax: searchFilters.banosMax,
-      ambientesMin: searchFilters.ambientesMin,
-      ambientesMax: searchFilters.ambientesMax,
-      precioMin: searchFilters.precioMin,
-      precioMax: searchFilters.precioMax,
-      idLocalidad: searchFilters.localidad?.value,
-      idTipoInmueble: searchFilters.tipoInmueble?.value,
-    };
+  const search = useCallback(
+    (overrideFilters) => {
+      setLoading(true);
+      const searchFilters = overrideFilters || filters;
+      const rq = {
+        habitacionesMin: searchFilters.habitacionesMin,
+        habitacionesMax: searchFilters.habitacionesMax,
+        banosMin: searchFilters.banosMin,
+        banosMax: searchFilters.banosMax,
+        ambientesMin: searchFilters.ambientesMin,
+        ambientesMax: searchFilters.ambientesMax,
+        precioMin: searchFilters.precioMin,
+        precioMax: searchFilters.precioMax,
+        idLocalidad: searchFilters.localidad?.value,
+        idTipoInmueble: searchFilters.tipoInmueble?.value,
+      };
 
-    API.get("/inmueble", rq)
-      .then((response) => {
-        setInmuebles(response.data);
-        setLoading(false);
-      })
-      .catch(() => {});
-  }, [filters]);
+      API.get("/inmueble", rq)
+        .then((response) => {
+          setInmuebles(response.data);
+          setLoading(false);
+        })
+        .catch(() => {});
+    },
+    [filters]
+  );
 
   const handleSearch = useCallback(() => {
     search();
@@ -57,16 +61,16 @@ const Inmuebles = () => {
   useEffect(() => {
     if (inmuebles === null) {
       let presetFilters = null;
-      let localidadFilter = searchParams.get('idLocalidad')
-      let tipoInmuebleFilter = searchParams.get('idTipoInmueble')
-      if (localidadFilter || tipoInmuebleFilter ){
+      let localidadFilter = searchParams.get("idLocalidad");
+      let tipoInmuebleFilter = searchParams.get("idTipoInmueble");
+      if (localidadFilter || tipoInmuebleFilter) {
         presetFilters = {
-          localidad:  { value: localidadFilter },
-          tipoInmueble: { value: tipoInmuebleFilter},
-        }
+          localidad: { value: localidadFilter },
+          tipoInmueble: { value: tipoInmuebleFilter },
+        };
       }
       search(presetFilters);
-    } 
+    }
   }, [inmuebles, search, searchParams]);
 
   const handleInmuebleSelected = (inmueble) => {
@@ -125,6 +129,10 @@ const Inmuebles = () => {
     setFilters((prevFilters) => ({ ...prevFilters, localidad: newValue }));
   };
 
+  const tipoInmebleInputChangeHandler = (newValue) => {
+    setFilters((prevFilters) => ({ ...prevFilters, tipoInmueble: newValue }));
+  };
+
   if (loading || !inmuebles)
     return <LoadingSpinner className="loading-center" />;
 
@@ -135,9 +143,7 @@ const Inmuebles = () => {
           <p className="tittle-filter">Filtros</p>
           <div className="filters-container">
             <Row>
-              <label className="tittle-labels">
-                Habitaciones
-              </label>
+              <label className="tittle-labels">Habitaciones</label>
               <Col>
                 <TextBox
                   containerClassName="search-control"
@@ -235,15 +241,29 @@ const Inmuebles = () => {
               />
             </div>
             <br />
-            <div className="button-filter" >
-              <Button className="button-filter" onClick={handleSearch}>Buscar</Button>
+            <div className="search-control">
+              <label className="tittle-labels">Tipo</label>
+              <TipoInmuebleCombo
+                id="tipoInmueble"
+                placeholder="Departamento"
+                onChange={tipoInmebleInputChangeHandler}
+                value={filters.tipoInmueble}
+              />
+            </div>
+            <br />
+            <div className="button-filter">
+              <Button className="button-filter" onClick={handleSearch}>
+                Buscar
+              </Button>
             </div>
           </div>
         </Col>
         <Col>
           <div className="inmuebles-container">
             {inmuebles.length === 0 && (
-              <p className="no-inmuebles">Actualmente no hay ningún inmueble disponible</p>
+              <p className="no-inmuebles">
+                Actualmente no hay ningún inmueble disponible
+              </p>
             )}
             {inmuebles.map((inmueble) => {
               return (
