@@ -60,7 +60,6 @@ const retrieveStored = () => {
 };
 
 export const AuthContextProvider = (props) => {
-  // Guardamos el token en localStorage por lo que vamos a buscarlo para ver si lo tenemos y no se vencio.
   const storedData = retrieveStored();
   let initialToken;
   let initialIdUsuario;
@@ -112,7 +111,7 @@ export const AuthContextProvider = (props) => {
     setEmail(data.email);
     setNombreUsuario(data.nombreUsuario);
     setNombreRol(data.nombreRol);
-    // Guardamos en localStorage el token y la fecha(con hora) de la expiración del mismo.
+
     localStorage.setItem("token", data.bearer);
     localStorage.setItem("expirationTime", expirationTime);
     localStorage.setItem("idUsuario", data.idUsuario);

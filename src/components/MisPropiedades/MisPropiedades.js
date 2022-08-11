@@ -5,7 +5,6 @@ import { Outlet, useNavigate } from "react-router";
 import * as API from "api/API";
 import LoadingSpinner from "components/UI/LoadingSpinner";
 import InmuebleStyledCard from "components/inmuebles/InmuebleStyledCard";
-import classes from "./MisPropiedades.module.css";
 import { NotificationManager } from "react-notifications";
 
 
@@ -48,10 +47,10 @@ const MisPropiedades = () => {
       .catch(() => { });
   };
   if (loading || !inmuebles) return <LoadingSpinner className="loading-center" />;
-  
+
   return (
     <>
-      <p className={classes.tittle}>
+      <p className="page-title">
         Mis propiedades
       </p>
       ;

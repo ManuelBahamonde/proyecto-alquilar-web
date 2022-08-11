@@ -58,7 +58,6 @@ const FormInmueble = ({ idInmueble }) => {
   const navigate = useNavigate();
   const authCtx = useContext(AuthContext);
 
-  // const [posiblesTiposInmuebles, setPosiblesTiposInmuebles] = useState([]);
   const [hayFechaHasta, setHayFechaHasta] = useState(false);
 
   const [loading, setLoading] = useState(false);
@@ -95,7 +94,6 @@ const FormInmueble = ({ idInmueble }) => {
 
   useEffect(() => {
     setLoading(true);
-    // Si estamos editando nos llegará un id
     if (idInmueble) {
       API.get(`/inmueble/${idInmueble}`)
         .then((response) => {
@@ -395,7 +393,6 @@ const FormInmueble = ({ idInmueble }) => {
       return;
     }
 
-    // Llamo a la función para crear el inmueble...
     if (!idInmueble) {
       guardarNuevoInmueble({
         idInmueble: 0,
@@ -643,8 +640,8 @@ const FormInmueble = ({ idInmueble }) => {
                   <input
                     type="file"
                     id="imagen"
-                    multiple="multiple" // Para tomar múltiples archivos
-                    accept="image/png, image/gif, image/jpeg" // Solo aceptamos estas extensiones
+                    multiple="multiple"
+                    accept="image/png, image/gif, image/jpeg"
                     onChange={imagesInputChangeHandler}
                     onBlur={validarImagenes}
                   />

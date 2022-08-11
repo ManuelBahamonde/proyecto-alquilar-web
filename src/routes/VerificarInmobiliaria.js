@@ -35,7 +35,7 @@ const VerificarInmobiliaria = () => {
             .catch(() => { })
             .finally(() => setLoading(false));
     }, [refreshInmobiliarias]);
-    
+
     const handleRejectInmobiliaria = useCallback((idUsuario) => {
         setLoading(true);
 
@@ -55,18 +55,22 @@ const VerificarInmobiliaria = () => {
     }, [inmobiliarias, handleConfirmInmobiliaria, handleRejectInmobiliaria]);
 
     return (
-        <Card>
-            {loading
-                ? <LoadingSpinner />
-                : (
-                    <>
-                        <h3>Inmobiliarias por verificar</h3>
+        <>
+
+            <p className="page-title">
+                Inmobiliarias por verificar
+            </p>
+            ;
+            <Card>
+                {loading
+                    ? <LoadingSpinner />
+                    : (
                         <Scrollbars style={{ height: 500 }}>
                             {renderInmobiliarias()}
                         </Scrollbars>
-                    </>
-                )}
-        </Card>
+                    )}
+            </Card>
+        </>
     );
 };
 

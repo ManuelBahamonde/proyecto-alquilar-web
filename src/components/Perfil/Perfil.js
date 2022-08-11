@@ -171,100 +171,105 @@ const Perfil = () => {
   } = form;
 
   return (
-    <Card className="perfil-card">
-      <Form onSubmit={formSubmissionHandler}>
-        <Form.Group as={Col}>
-          <TextBox
-            required
-            containerClassName="alquilar-control"
-            type="text"
-            label="Nombre"
-            value={nombre}
-            onChange={handleNombreChange}
-            validate={isTextValid}
-            invalidText="El Nombre especificado no es valido"
-          />
-        </Form.Group>
-        <Form.Group as={Col}>
-          <TextBox
-            required
-            containerClassName="alquilar-control"
-            type="text"
-            label="Telefono"
-            value={telefono}
-            onChange={handleTelefonoChange}
-            validate={isTextValid}
-            invalidText="El Telefono especificado no es valido"
-          />
-        </Form.Group>
-        <Form.Group as={Col}>
-          <TextBox
-            required
-            containerClassName="alquilar-control"
-            type="text"
-            label="Email"
-            value={email}
-            onChange={handleEmailChange}
-            validate={isTextValid}
-            invalidText="El Email especificado no es valido"
-          />
-        </Form.Group>
-        <Form.Group as={Col}>
-          <LocalidadAuto
-            required
-            label="Localidad"
-            isClearable
-            cacheOptions
-            placeholder="Rosario"
-            onChange={handleLocalidadChange}
-            value={localidad}
-            validate={isDropdownItemValid}
-            invalidText="La Localidad especificada no es valida"
-          />
-        </Form.Group>
-        <Form.Group as={Col}>
-          <TextBox
-            required
-            containerClassName="alquilar-control"
-            type="text"
-            label="Direccion"
-            value={direccion}
-            onChange={handleDireccionChange}
-            validate={isTextValid}
-            invalidText="La Direccion especificada no es valido"
-          />
-        </Form.Group>
-        <Form.Group as={Col}>
-          <TextBox
-            containerClassName="alquilar-control"
-            type="number"
-            label="Piso"
-            value={piso}
-            onChange={handlePisoChange}
-          />
-        </Form.Group>
-        <Form.Group as={Col} className="alquilar-control">
-          <Checkbox
-            label="Muestra inmuebles?"
-            checked={showHorarios}
-            onToggle={handleShowHorariosToggle}
-          />
-        </Form.Group>
-        {showHorarios && (
-          <SetupHorariosDisponiblesControl
-            currentUserInfo={currentUserInfo}
-            horarios={horarios}
-            duracionTurno={duracionTurno}
-            onChange={handleHorariosSetupChange}
-          />
-        )}
-        <div className="footer">
-          <button className="submit">
-            Actualizar
-          </button>
-        </div>
-      </Form>
-    </Card>
+    <>
+      <p className="page-title">
+        Mi perfil
+      </p>
+      <Card className="perfil-card">
+        <Form onSubmit={formSubmissionHandler}>
+          <Form.Group as={Col}>
+            <TextBox
+              required
+              containerClassName="alquilar-control"
+              type="text"
+              label="Nombre"
+              value={nombre}
+              onChange={handleNombreChange}
+              validate={isTextValid}
+              invalidText="El Nombre especificado no es valido"
+            />
+          </Form.Group>
+          <Form.Group as={Col}>
+            <TextBox
+              required
+              containerClassName="alquilar-control"
+              type="text"
+              label="Telefono"
+              value={telefono}
+              onChange={handleTelefonoChange}
+              validate={isTextValid}
+              invalidText="El Telefono especificado no es valido"
+            />
+          </Form.Group>
+          <Form.Group as={Col}>
+            <TextBox
+              required
+              containerClassName="alquilar-control"
+              type="text"
+              label="Email"
+              value={email}
+              onChange={handleEmailChange}
+              validate={isTextValid}
+              invalidText="El Email especificado no es valido"
+            />
+          </Form.Group>
+          <Form.Group as={Col}>
+            <LocalidadAuto
+              required
+              label="Localidad"
+              isClearable
+              cacheOptions
+              placeholder="Rosario"
+              onChange={handleLocalidadChange}
+              value={localidad}
+              validate={isDropdownItemValid}
+              invalidText="La Localidad especificada no es valida"
+            />
+          </Form.Group>
+          <Form.Group as={Col}>
+            <TextBox
+              required
+              containerClassName="alquilar-control"
+              type="text"
+              label="Direccion"
+              value={direccion}
+              onChange={handleDireccionChange}
+              validate={isTextValid}
+              invalidText="La Direccion especificada no es valido"
+            />
+          </Form.Group>
+          <Form.Group as={Col}>
+            <TextBox
+              containerClassName="alquilar-control"
+              type="number"
+              label="Piso"
+              value={piso}
+              onChange={handlePisoChange}
+            />
+          </Form.Group>
+          <Form.Group as={Col} className="alquilar-control">
+            <Checkbox
+              label="Muestra inmuebles?"
+              checked={showHorarios}
+              onToggle={handleShowHorariosToggle}
+            />
+          </Form.Group>
+          {showHorarios && (
+            <SetupHorariosDisponiblesControl
+              currentUserInfo={currentUserInfo}
+              horarios={horarios}
+              duracionTurno={duracionTurno}
+              onChange={handleHorariosSetupChange}
+            />
+          )}
+          <div className="footer">
+            <button className="submit">
+              Actualizar
+            </button>
+          </div>
+        </Form>
+      </Card>
+    </>
   );
 };
 export default Perfil;

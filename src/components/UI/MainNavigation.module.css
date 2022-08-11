@@ -1,6 +1,6 @@
 .header {
   width: 100%;
-  /* height: 3.5rem; */
+  z-index: 9999;
   background-color: #153661;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -9,8 +9,6 @@
 }
 
 .logo {
-  /* font-family: 'Lato', sans-serif; */
-  /* font-size: 2rem; */
   color: white;
   margin-right: 1.5;
 }

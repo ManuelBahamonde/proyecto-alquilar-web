@@ -4,11 +4,16 @@ import { useParams } from 'react-router';
 
 const EditarInmueble = () => {
     const params = useParams();
-    const {idInmueble} = params;
+    const { idInmueble } = params;
     return (
-        <Card>
-            <FormInmueble idInmueble={idInmueble} />
-        </Card>
+        <>
+            <p className="page-title">
+                Editar Inmueble
+            </p>
+            <Card>
+                <FormInmueble idInmueble={idInmueble} />
+            </Card>
+        </>
     );
 }
 
