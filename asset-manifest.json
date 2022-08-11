@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/proyecto-alquilar-web/static/css/main.b24b5dba.css",
-    "main.js": "/proyecto-alquilar-web/static/js/main.f4b8d638.js",
+    "main.css": "/proyecto-alquilar-web/static/css/main.a24ce255.css",
+    "main.js": "/proyecto-alquilar-web/static/js/main.31caa214.js",
     "static/media/LogoAlquilar.svg": "/proyecto-alquilar-web/static/media/LogoAlquilar.7d0472a6dab046198a4737372a36f3fb.svg",
     "static/media/notification.svg?s3g3t9": "/proyecto-alquilar-web/static/media/notification.5d0158671dd860c714c4.svg",
     "static/media/notification.eot": "/proyecto-alquilar-web/static/media/notification.3657084dc0419605a91c.eot",
     "static/media/notification.woff?s3g3t9": "/proyecto-alquilar-web/static/media/notification.c392cd33d9d9de730f9d.woff",
     "static/media/notification.ttf?s3g3t9": "/proyecto-alquilar-web/static/media/notification.c5d9251ea82e42f75381.ttf",
     "index.html": "/proyecto-alquilar-web/index.html",
-    "main.b24b5dba.css.map": "/proyecto-alquilar-web/static/css/main.b24b5dba.css.map",
-    "main.f4b8d638.js.map": "/proyecto-alquilar-web/static/js/main.f4b8d638.js.map"
+    "main.a24ce255.css.map": "/proyecto-alquilar-web/static/css/main.a24ce255.css.map",
+    "main.31caa214.js.map": "/proyecto-alquilar-web/static/js/main.31caa214.js.map"
   },
   "entrypoints": [
-    "static/css/main.b24b5dba.css",
-    "static/js/main.f4b8d638.js"
+    "static/css/main.a24ce255.css",
+    "static/js/main.31caa214.js"
   ]
 }

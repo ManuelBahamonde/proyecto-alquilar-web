@@ -1,4 +1,4 @@
-html,body {
+html, body {
     height: 100%;
     background-color: rgb(234, 243, 255);
 }
@@ -96,7 +96,7 @@ html,body {
     margin-left: 8px;
 }
 
-.home .search-button{
+.home .search-button {
     width: 200px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     letter-spacing: 1px;
@@ -150,20 +150,22 @@ html,body {
     justify-content: flex-end;
     gap: 1rem;
 }
+
 .perfil-card .footer .submit {
-  border: 1px solid #010b5a;
-  background-color: #010b5a;
-  color: white;
-  font: inherit;
-  cursor: pointer;
-  border: none;
-  border-radius: 25px;
-  padding: 0.5rem 2rem;
-  margin-top: 1rem;
+    border: 1px solid #010b5a;
+    background-color: #010b5a;
+    color: white;
+    font: inherit;
+    cursor: pointer;
+    border: none;
+    border-radius: 25px;
+    padding: 0.5rem 2rem;
+    margin-top: 1rem;
 }
+
 .perfil-card .footer .submit:hover,
 .perfil-card .footer .submit:active {
-  background-color: #00359f;
+    background-color: #00359f;
 }
 
 .react-select {
@@ -182,6 +184,7 @@ html,body {
     flex-direction: row;
     justify-content: space-between;
 }
+
 .horario-card .horario-delete-icon {
     margin-top: auto;
     margin-bottom: auto;
@@ -189,13 +192,15 @@ html,body {
     cursor: pointer;
 }
 
-.alquilar-control.invalid label{
+.alquilar-control.invalid label {
     color: #ca3e51;
 }
+
 .alquilar-control.invalid input {
-  border-color: #aa0b20;
-  background-color: #ffeff1;
+    border-color: #aa0b20;
+    background-color: #ffeff1;
 }
+
 .alquilar-control.invalid p {
     color: #ca3e51;
 }
@@ -211,4 +216,19 @@ html,body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.dropdown-item.active a {
+    color: white;
+}
+
+.page-title {
+    font-weight: bold;
+    font-size: xx-large;
+    text-align: center;
+    margin-top: 30px;
+    color: rgb(19, 0, 79);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-bottom: 0px;
+    letter-spacing: 2px;
 }
