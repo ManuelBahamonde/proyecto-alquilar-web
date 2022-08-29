@@ -1,0 +1,39 @@
+.footerStyled {
+  text-align: end;
+  font-weight: bold;
+  font-size: large;
+}
+
+.tittleStyled {
+  font-size: larger;
+  font-weight: 600;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color: rgb(19, 0, 79);
+}
+
+.priceStyled {
+  font-size: larger;
+  font-weight: 700;
+  color: red;
+}
+
+.locationStyled {
+  color: grey;
+}
+
+.buttonStyled {
+  margin: 10px;
+  font-size: large;
+  letter-spacing: 2px;
+}
+
+.features {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.seller {
+  color: grey;
+  text-align: start;
+  font-weight: bold;
+}
