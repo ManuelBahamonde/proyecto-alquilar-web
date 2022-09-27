@@ -4,6 +4,8 @@ import { useNavigate } from "react-router";
 import LocalidadAuto from "components/shared/LocalidadAuto";
 import TipoInmuebleCombo from "components/shared/TipoInmuebleCombo";
 import { BsSearch } from "react-icons/bs";
+import NewsList from "components/noticias/NewsList";
+
 
 const Home = () => {
     const navigate = useNavigate();
@@ -36,6 +38,7 @@ const Home = () => {
     }
 
     return (
+        <div>
         <div className="home">
             <div className="integrantes">
                 <Container className="searchContainer">
@@ -84,9 +87,11 @@ const Home = () => {
                             </Button>
                         </Container>
                     </Row>
-                </Container>
-            </div>
+                </Container> 
+            </div>     
         </div>
+         <NewsList />
+         </div>
     );
 };
 

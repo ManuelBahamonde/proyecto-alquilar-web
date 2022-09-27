@@ -6,7 +6,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import Logo from "assets/LogoAlquilar.svg";
 import { BsFillPersonFill } from "react-icons/bs";
 import { SiHomeassistant } from "react-icons/si";
-import { MdHomeWork, MdAssignmentInd, MdManageAccounts } from "react-icons/md";
+import { MdHomeWork, MdAssignmentInd, MdManageAccounts, MdOutlineNewReleases } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
 const MainNavigation = () => {
@@ -77,6 +77,22 @@ const MainNavigation = () => {
                       <MdManageAccounts />
                       <NavLink className={classes.NavDropdownLink} to="/admin/verificacion">
                         Solicitudes inmobiliarias
+                      </NavLink>
+                    </NavDropdown.Item>
+                  )}
+                   {authCtx.nombreRol === 'Administrador' && (
+                    <NavDropdown.Item as={NavLink} to="/admin/NuevaNoticia">
+                      <MdOutlineNewReleases />
+                      <NavLink className={classes.NavDropdownLink} to="/admin/NuevaNoticia">
+                        Agregar nueva noticia
+                      </NavLink>
+                    </NavDropdown.Item>
+                  )}
+                   {authCtx.nombreRol === 'Administrador' && (
+                    <NavDropdown.Item as={NavLink} to="/admin/listadoNoticias">
+                      <MdOutlineNewReleases />
+                      <NavLink className={classes.NavDropdownLink} to="/admin/listadoNoticias">
+                        Noticias
                       </NavLink>
                     </NavDropdown.Item>
                   )}

@@ -1,0 +1,10 @@
+.newsListTitle {
+    margin-top: 550px;
+    font-weight: bold;
+    font-size: xx-large;
+    text-align: center;
+    color: rgb(19, 0, 79);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-bottom: 0px;
+    letter-spacing: 2px;
+}
