@@ -15,6 +15,9 @@ import "react-notifications/lib/notifications.css";
 import 'react-datepicker/dist/react-datepicker.css';
 import "react-image-gallery/styles/css/image-gallery.css";
 import MisPropiedades from "components/misPropiedades/MisPropiedades";
+import Noticias from "routes/noticias/Noticias";
+import EditarNoticia from "routes/noticias/EditarNoticia";
+import NuevaNoticia from "routes/noticias/NuevaNoticia";
 
 const App = () => {
   const authCtx = useContext(AuthContext);
@@ -35,6 +38,9 @@ const App = () => {
           element={<EditarInmueble />}
         />
         <Route path="nuevoInmueble" element={<NuevoInmueble />} />
+        {authCtx.isLoggedIn && authCtx.nombreRol==="Administrador" && <Route path="admin/listadoNoticias" element={<Noticias />} />}
+        {authCtx.isLoggedIn && authCtx.nombreRol==="Administrador" && <Route path="admin/NuevaNoticia" element={<NuevaNoticia />} />}
+        {authCtx.isLoggedIn && authCtx.nombreRol==="Administrador" && <Route path="noticiaEditMode/:idNoticia" element={<EditarNoticia />} />}
         {authCtx.isLoggedIn && authCtx.nombreRol==="Administrador" && <Route path="admin/verificacion" element={<VerificarInmobiliaria />} />}
         {authCtx.isLoggedIn && !authCtx.nombreRol==="Administrador" && <Route path="admin/verificacion" element={<Navigate replace to="/home" />} />}
         <Route path="*" element={<NotFound />} />
