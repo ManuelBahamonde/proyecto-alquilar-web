@@ -6,7 +6,13 @@ import { Outlet, useNavigate } from "react-router-dom";
 import Logo from "assets/LogoAlquilar.svg";
 import { BsFillPersonFill } from "react-icons/bs";
 import { SiHomeassistant } from "react-icons/si";
-import { MdHomeWork, MdAssignmentInd, MdManageAccounts, MdOutlineNewReleases } from "react-icons/md";
+import {
+  MdHomeWork,
+  MdAssignmentInd,
+  MdManageAccounts,
+  MdOutlineNewReleases,
+  MdAssignmentTurnedIn,
+} from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
 const MainNavigation = () => {
@@ -27,10 +33,7 @@ const MainNavigation = () => {
       <Navbar className={classes.header} variant="dark" expand="lg">
         <Container>
           <Navbar.Brand as={NavLink} className={classes.logo} to="/home">
-            <img
-              src={Logo}
-              alt="React Bootstrap logo"
-            />
+            <img src={Logo} alt="React Bootstrap logo" />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -56,7 +59,10 @@ const MainNavigation = () => {
                 >
                   <NavDropdown.Item as={NavLink} to="/nuevoInmueble">
                     <MdHomeWork />
-                    <NavLink className={classes.NavDropdownLink}  to="/nuevoInmueble">
+                    <NavLink
+                      className={classes.NavDropdownLink}
+                      to="/nuevoInmueble"
+                    >
                       Agregar nuevo inmueble
                     </NavLink>
                   </NavDropdown.Item>
@@ -68,30 +74,42 @@ const MainNavigation = () => {
                   </NavDropdown.Item>
                   <NavDropdown.Item as={NavLink} to="/mispropiedades">
                     <SiHomeassistant />
-                    <NavLink className={classes.NavDropdownLink} to="/mispropiedades">
+                    <NavLink
+                      className={classes.NavDropdownLink}
+                      to="/mispropiedades"
+                    >
                       Mis Propiedades
                     </NavLink>
                   </NavDropdown.Item>
-                  {authCtx.nombreRol === 'Administrador' && (
+                  {authCtx.nombreRol === "Administrador" && (
                     <NavDropdown.Item as={NavLink} to="/admin/verificacion">
                       <MdManageAccounts />
-                      <NavLink className={classes.NavDropdownLink} to="/admin/verificacion">
+                      <NavLink
+                        className={classes.NavDropdownLink}
+                        to="/admin/verificacion"
+                      >
                         Solicitudes inmobiliarias
                       </NavLink>
                     </NavDropdown.Item>
                   )}
-                   {authCtx.nombreRol === 'Administrador' && (
+                  {authCtx.nombreRol === "Administrador" && (
                     <NavDropdown.Item as={NavLink} to="/admin/NuevaNoticia">
-                      <MdOutlineNewReleases />
-                      <NavLink className={classes.NavDropdownLink} to="/admin/NuevaNoticia">
+                      <MdAssignmentTurnedIn />
+                      <NavLink
+                        className={classes.NavDropdownLink}
+                        to="/admin/NuevaNoticia"
+                      >
                         Agregar nueva noticia
                       </NavLink>
                     </NavDropdown.Item>
                   )}
-                   {authCtx.nombreRol === 'Administrador' && (
+                  {authCtx.nombreRol === "Administrador" && (
                     <NavDropdown.Item as={NavLink} to="/admin/listadoNoticias">
                       <MdOutlineNewReleases />
-                      <NavLink className={classes.NavDropdownLink} to="/admin/listadoNoticias">
+                      <NavLink
+                        className={classes.NavDropdownLink}
+                        to="/admin/listadoNoticias"
+                      >
                         Noticias
                       </NavLink>
                     </NavDropdown.Item>

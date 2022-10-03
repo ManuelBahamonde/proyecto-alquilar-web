@@ -20,13 +20,14 @@ const FormNoticia = ({ idNoticia }) => {
   useEffect(() => {
     setLoading(true);
     if (idNoticia) {
-      API.get(`/noticia/${idNoticia}`).then((response) => {
-        setTituloIngresado(response.data.titulo);
-        setDescripcionIngresada(response.data.descripcion ?? "");
-      })
-        .catch(() => { });
+      API.get(`/noticia/${idNoticia}`)
+        .then((response) => {
+          setTituloIngresado(response.data.titulo);
+          setDescripcionIngresada(response.data.descripcion);
+        })
+        .catch(() => {});
     }
-    setLoading(false)
+    setLoading(false);
   }, [idNoticia]);
 
   const tituloInputChangeHandler = (newValue) => {
@@ -49,13 +50,13 @@ const FormNoticia = ({ idNoticia }) => {
       titulo: noticiaData.titulo,
       descripcion: noticiaData.descripcion,
     };
-    API.post("/noticia", {noticia})
+    API.post("/noticia", noticia)
       .then(() => {
         NotificationManager.success("La noticia fue creada correctamente.");
         limpiarForm();
         navigate(`/admin/listadoNoticias`);
       })
-      .catch(() => { })
+      .catch(() => {})
       .finally(() => setLoading(false));
   };
 
@@ -72,10 +73,9 @@ const FormNoticia = ({ idNoticia }) => {
         NotificationManager.success("La noticia fue editada correctamente.");
         navigate(`/admin/listadoNoticias`);
       })
-      .catch(() => { })
+      .catch(() => {})
       .finally(() => setLoading(false));
   };
-
 
   // Validaciones individuales por campo
   const validarTitulo = () => {
@@ -86,7 +86,6 @@ const FormNoticia = ({ idNoticia }) => {
     const descripcionIngresadaEsValida = !isEmpty(descripcionIngresada);
     return descripcionIngresadaEsValida;
   };
-
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
@@ -158,7 +157,7 @@ const FormNoticia = ({ idNoticia }) => {
               </Col>
             </Row>
             <div className={classes.actions}>
-              <button className={classes.submit} >
+              <button className={classes.submit}>
                 {idNoticia ? "Editar Noticia" : "Agregar Noticia"}
               </button>
             </div>
